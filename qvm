@@ -1,0 +1,72 @@
+#!/usr/bin/env sh
+
+# qvm - Trivial management of 64 bit virtual machines with qemu.
+#
+# Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+#
+# To the extent possible under law, the author(s) have dedicated all 
+# copyright and related and neighboring rights to this software to the public 
+# domain worldwide. This software is distributed without any warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication along 
+# with this software. If not, see 
+# <http://creativecommons.org/publicdomain/zero/1.0/>. 
+
+. ./configvmrc
+
+input="$1"
+if [ -z "$input" ] || [ "$input" = "-h" ]; then
+    cat <<-EOF
+Usage: qvm [OPTION]
+Trivial management of 64 bit virtual machines with qemu.
+
+Options:
+    -b      backup vhd
+    -c      create new vhd
+    -d      delete vhd backup
+    -h      print this help
+    -i      install img on vhd
+    -r      run vm
+
+Only a single option is accepted.
+Before running any virtual machine you must create a backup first.
+
+CC0
+Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+EOF
+    exit 1
+fi
+
+{
+
+[ "$input" = "-b" ] \
+&& qemu-img create -f "$vhd_type" \
+-b "$vhd_name" \
+"$vhd_name".mod
+
+[ "$input" = "-d" ] \
+&& rm "$vhd_name".mod
+
+[ "$input" = "-c" ] \
+&& qemu-img create -f "$vhd_type" "$vhd_name" "$vhd_size"
+
+[ "$input" = "-i" ] \
+&& qemu-system-x86_64 -m "$vm_memory" \
+-enable-kvm -cdrom "$img_name" \
+-boot order=d "$vhd_name"
+
+[ "$input" = "-r" ] \
+&& [ -f "$vhd_name".mod ] \
+&& qemu-system-x86_64 \
+-m "$vm_memory" \
+-enable-kvm \
+-device e1000,netdev=user.0 \
+-netdev user,\
+id=user.0,hostfwd=tcp::"$host_port"-:"$guest_port",\
+hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
+-virtfs local,path="$shared_data_path",\
+security_model=none,mount_tag="$mount_tag" \
+"$vhd_name".mod \
+|| { printf "Make a backup first.\n"; exit 1; }
+
+} &

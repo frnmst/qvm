@@ -1,0 +1,30 @@
+# qvm - Trivial management of 64 bit virtual machines with qemu.
+#
+# Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+#
+# To the extent possible under law, the author(s) have dedicated all
+# copyright and related and neighboring rights to this software to the public
+# domain worldwide. This software is distributed without any warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication along
+# with this software. If not, see
+# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+img_name="antergos.iso"
+
+vhd_size="16G"
+vhd_type="qcow2"
+vhd_name=""$img_name"."$vhd_type""
+vm_memory="4G"
+
+# Shared port.
+host_port="5555"
+# vm port.
+guest_port="3050"
+# Shared port.
+ssh_host_port="2222"
+# vm port.
+ssh_guest_port="22"
+
+shared_data_path="/home/parabola/dev/unife/intern/qemu/shared_host_guest"
+mount_tag="host_share"
