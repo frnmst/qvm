@@ -11,7 +11,7 @@ It can handle:
 - Last, but not least, running the virtual machine with all
   these options.
 
-# Setup information
+# Setup information and usage
 - You need a 64 bit machine.
 - Modify `configvmrc` based on your needs.
   Variables are self-explanatory and I have kept mine 
@@ -21,6 +21,13 @@ It can handle:
 # pacman -S qemu
 $ . ./configvmrc
 $ mkdir -p "$shared_data_path"
+$ ./qvm -i
+$ ./qvm -b
+```
+
+- Now you can run the virtual machine:
+```
+$ ./qvm -r
 ```
 
 - On your guest machine add the following in `/etc/fstab`:
@@ -29,6 +36,11 @@ host_share   /home/vm/shared    9p      trans=virtio,version=9p2000.L   0 0
 ```
 This will enable the shared directory automatically (no mount commands of any 
 sort).
+
+- You can connect to your virtual machine via SSH, using the default values:
+```
+ssh -p 2222 <guest_user_name>@127.0.0.1
+```
 
 # License
 CC0.
