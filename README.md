@@ -1,7 +1,7 @@
 # qvm
 Trivial management of 64 bit virtual machines with qemu.
 
-# What this script will do
+## What this script will do
 It can handle:
 - Virtual hard disk creation, backup and deletion.
 - Basic network management: two ports are exposed to the host
@@ -11,7 +11,7 @@ It can handle:
 - Last, but not least, running the virtual machine with all
   these options.
 
-# Setup information and usage
+## Setup information and usage
 - You need a 64 bit machine.
 - Modify `configvmrc` based on your needs.
   Variables are self-explanatory and I have kept mine 
@@ -41,6 +41,14 @@ sort).
 ```
 ssh -p 2222 <guest_user_name>@127.0.0.1
 ```
+### Optional step
 
-# License
+- If you are not interested in using the GUI, but you only need textual interface
+  (i.e: SSH), you can simply add the following, along with the other options present 
+  under `-r`:
+```
+-display none \
+```
+
+## License
 CC0.
