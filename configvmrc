@@ -10,7 +10,7 @@
 # with this software. If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-img_name="antergos.iso"
+img_name="parabola-mate-2016.07.27-dual.iso"
 
 vhd_size="16G"
 vhd_type="qcow2"
@@ -26,5 +26,5 @@ ssh_host_port="2222"
 # vm port.
 ssh_guest_port="22"
 
-shared_data_path="/home/parabola/dev/unife/intern/qemu/shared_host_guest"
+shared_data_path="/home/parabola/dev/unife/qvm/shared_host_guest"
 mount_tag="host_share"
