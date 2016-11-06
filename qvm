@@ -27,7 +27,7 @@ Options:
     -i, --install               install img on vhd
     -r, --run                   run vm
         --run-nox               run vm without opening a graphical window
-                                (useful fir background jobs like SSH)
+                                (useful for background jobs like SSH)
 
 Only a single option is accepted.
 Before running any virtual machine you must create a backup first.
