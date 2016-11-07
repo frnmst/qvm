@@ -19,7 +19,7 @@ Usage: qvm [OPTION]
 Trivial management of 64 bit virtual machines with qemu.
 
 Options:
-    -a, --attack                connect via ssh
+    -a, --attach                connect via SSH
     -b, --backup                backup vhd
     -c, --create                create new vhd
     -d, --delete                delete vhd backup
