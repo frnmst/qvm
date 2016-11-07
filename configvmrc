@@ -25,6 +25,8 @@ guest_port="3050"
 ssh_host_port="2222"
 # vm port.
 ssh_guest_port="22"
+# vm guest user name
+ssh_guest_username="vm"
 
 shared_data_path="/home/parabola/dev/unife/qvm/shared_host_guest"
 mount_tag="host_share"

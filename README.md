@@ -10,6 +10,7 @@ It can handle:
 - Basic network management: two ports are exposed to the host
   machine (but you can add as many as you want). One of these 
   two ports is SSH (so admin gets simpler).
+- Connection via SSH.
 - Shared directory between host and guest.
 - Last, but not least, running the virtual machine with all
   these options.
@@ -37,10 +38,6 @@ It can handle:
 
 This will enable the shared directory automatically (no mount commands of any 
 sort).
-
-- You can connect to your virtual machine via SSH, using the default values:
-
-        ssh -p 2222 <guest_user_name>@127.0.0.1
 
 ## License
 

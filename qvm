@@ -19,6 +19,7 @@ Usage: qvm [OPTION]
 Trivial management of 64 bit virtual machines with qemu.
 
 Options:
+    -a, --attack                connect via ssh
     -b, --backup                backup vhd
     -c, --create                create new vhd
     -d, --delete                delete vhd backup
@@ -41,6 +42,11 @@ unrecognized_option()
 {
     printf "%s\n" "Try 'qvm --help' for more information"
 } 1>&2-
+
+attach()
+{
+    ssh -p "$ssh_host_port" -l "$ssh_guest_username" 127.0.0.1
+}
 
 backup()
 {
@@ -100,8 +106,8 @@ security_model=none,mount_tag="$mount_tag" \
 main()
 {
     local argc="$1"
-    local options="bcdhir"
-    local long_options="backup,create,delete,delete-original\
+    local options="abcdhir"
+    local long_options="attach,backup,create,delete,delete-original\
 ,help,install,run,run-nox"
     local opts
     local opt
@@ -120,6 +126,7 @@ main()
     for opt in $opts; do
         case "$opt" in
             -- )                                        ;;
+            -a | --attach )             attach          ;;
             -b | --backup )             backup          ;;
             -c | --create )             create          ;;
             -d | --delete )             delete          ;;
