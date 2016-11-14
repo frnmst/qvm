@@ -17,27 +17,64 @@ It can handle:
 
 ## Setup information and usage
 
-- You need a 64 bit machine.
+- You need a 64 bit machine with virtualization technology and more than 4 GB 
+  of RAM.
+
 - Modify `configvmrc` based on your needs.
   Variables are self-explanatory and I have kept mine 
   as an example.
 
+- Install qemu:
+
         # pacman -S qemu
-        $ . ./configvmrc
-        $ mkdir -p "$shared_data_path"
+
+- Create a new VHD and complete the OS installation:
+
+        $ ./qvm -c
         $ ./qvm -i
+
+- Optionally enable SSHD on the guest machine.
+
+- Optionally create a new backup VHD:
+
         $ ./qvm -b
 
-- Now you can run the virtual machine:
+- Now you can run the virtual machine either using the original or the backup 
+  VHD. By deault if you run `./qvm` the virtual machine will run in graphics 
+  mode using the backup hard disk.
 
-        $ ./qvm -r
-
-- On your guest machine add the following in `/etc/fstab`:
+- Optionally add the following in the gues machine's `/etc/fstab`, to enable 
+  the shared directory automatically (no mount commands of any
+  sort).
 
         host_share   /home/vm/shared    9p      trans=virtio,version=9p2000.L   0 0
 
-This will enable the shared directory automatically (no mount commands of any 
-sort).
+## Help
+
+    Usage: qvm [OPTION]
+    Trivial management of 64 bit virtual machines with qemu.
+
+    Options:
+        -a, --attach                connect via SSH
+        -b, --backup                backup vhd
+        -c, --create                create new vhd
+        -d, --delete                delete vhd backup
+            --delete-orig           delete original vhd
+        -h, --help                  print this help
+        -i, --install               install img on vhd
+        -n, --run-nox               run vm without opening a graphical window
+                                    (useful for background jobs like SSH)
+            --run-nox-orig          run-orig and run-nox combined
+        -s, --mkdir-shared          create shared directory
+        -x, --run                   run vm
+            --run-orig              run from original vhd
+
+
+    Only a single option is accepted.
+    By default, the backup vhd is run.
+
+    CC0
+    Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
 
 ## License
 

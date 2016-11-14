@@ -23,15 +23,19 @@ Options:
     -b, --backup                backup vhd
     -c, --create                create new vhd
     -d, --delete                delete vhd backup
-        --delete-original       delete original vhd
+        --delete-orig           delete original vhd
     -h, --help                  print this help
     -i, --install               install img on vhd
-    -r, --run                   run vm
-        --run-nox               run vm without opening a graphical window
+    -n, --run-nox               run vm without opening a graphical window
                                 (useful for background jobs like SSH)
+        --run-nox-orig          run-orig and run-nox combined
+    -s, --mkdir-shared          create shared directory
+    -x, --run                   run vm
+        --run-orig              run from original vhd
+
 
 Only a single option is accepted.
-Before running any virtual machine you must create a backup first.
+By default, the backup vhd is run.
 
 CC0
 Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
@@ -64,12 +68,16 @@ create()
 
 delete()
 {
-    rm "$vhd_name".mod
-}
+    local argc="$1"
+    local vhd=""
 
-delete_original()
-{
-    rm "$vhd_name"
+    if [ "$argc" = "orig" ]; then
+        vhd="$vhd_name"
+    else
+        vhd=""$vhd_name".mod"
+    fi
+
+    rm "$vhd"
 }
 
 installs()
@@ -81,11 +89,31 @@ installs()
 "$vhd_name" &
 }
 
+shared()
+{
+    mkdir -p "$shared_data_path"
+}
+
 run()
 {
-    argc="$1"
+    local argc1="$1"
+    local argc2="$2"
+    local vhd=""
+    local display=""
 
-    if [ -f "$vhd_name".mod ]; then
+    if [ "$argc2" = "orig" ]; then
+        vhd="$vhd_name"
+    else
+        vhd=""$vhd_name".mod"
+    fi
+
+    if [ "$argc1" = "none" ]; then
+        display="none"
+    else
+        display="gtk"
+    fi
+
+    if [ -f "$vhd" ]; then
         qemu-system-x86_64 \
 -m "$vm_memory" \
 -enable-kvm \
@@ -95,10 +123,10 @@ id=user.0,hostfwd=tcp::"$host_port"-:"$guest_port",\
 hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
 -virtfs local,path="$shared_data_path",\
 security_model=none,mount_tag="$mount_tag" \
--display "$argc" \
-"$vhd_name".mod &
+-display "$display" \
+"$vhd" &
     else
-        printf "Make a backup and an installation first.\n"
+        printf "VHD file \""$vhd"\" is missing.\n"
         exit 1
     fi
 }
@@ -107,12 +135,12 @@ main()
 {
     local argc="$1"
     local options="abcdhir"
-    local long_options="attach,backup,create,delete,delete-original\
-,help,install,run,run-nox"
+    local long_options="attach,backup,create,delete,delete-orig\
+,help,install,run,run-orig,run-nox,run-nox-orig"
     local opts
     local opt
 
-    [ -z "$argc" ] && argc="-r"
+    [ -z "$argc" ] && argc="-x"
 
     opts="$(getopt --options $options --longoptions $long_options -- $argc)"
 
@@ -130,11 +158,14 @@ main()
             -b | --backup )             backup          ;;
             -c | --create )             create          ;;
             -d | --delete )             delete          ;;
-                 --delete-original )    delete_original ;;
+                 --delete-orig )        delete orig     ;;
             -h | --help )               help            ;;
             -i | --install )            installs        ;;
-            -r | --run )                run gtk         ;;
-                 --run-nox )            run none        ;;
+            -n | --run-nox )            run none        ;;
+                 --run-nox-orig )       run none orig   ;;
+            -s | --mkdir-shared )       shared          ;;
+            -x | --run )                run gtk         ;;
+                 --run-orig )           run gtk orig    ;;
         esac
     done
 }
