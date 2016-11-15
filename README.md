@@ -33,7 +33,7 @@ It can handle:
         $ ./qvm -c
         $ ./qvm -i
 
-- Optionally enable SSHD on the guest machine.
+- Optionally enable the SSH daemon on the guest machine.
 
 - Optionally create a new backup VHD:
 
