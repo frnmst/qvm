@@ -47,7 +47,8 @@ It can handle:
   the shared directory automatically (no mount commands of any
   sort).
 
-        host_share   /home/vm/shared    9p      trans=virtio,version=9p2000.L   0 0
+        host_share   /home/vm/shared    9p      noauto,x-systemd.automount,trans=virtio,version=9p2000.L   0 0
+
 
 ## Help
 
