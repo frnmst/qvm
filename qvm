@@ -134,7 +134,7 @@ security_model=none,mount_tag="$mount_tag" \
 main()
 {
     local argc="$1"
-    local options="abcdhir"
+    local options="abcdhinrx"
     local long_options="attach,backup,create,delete,delete-orig\
 ,help,install,run,run-orig,run-nox,run-nox-orig"
     local opts
