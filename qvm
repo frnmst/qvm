@@ -113,6 +113,8 @@ run()
         display="gtk"
     fi
 
+    export QEMU_AUDIO_DRV=alsa
+
     if [ -f "$vhd" ]; then
         qemu-system-x86_64 \
 -m "$vm_memory" \
@@ -123,6 +125,7 @@ id=user.0,hostfwd=tcp::"$host_port"-:"$guest_port",\
 hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
 -virtfs local,path="$shared_data_path",\
 security_model=none,mount_tag="$mount_tag" \
+-soundhw ac97 \
 -display "$display" \
 "$vhd" &
     else
