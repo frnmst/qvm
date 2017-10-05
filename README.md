@@ -24,9 +24,13 @@ It can handle:
   Variables are self-explanatory and I have kept mine 
   as an example.
 
-- Install qemu:
-
-        # pacman -S qemu
+- Install the following dependencies
+  - [GNU Bash](http://www.gnu.org/software/bash/bash.html)
+    - Scipting language interpreter
+  - [GNU Core Utilities](https://www.gnu.org/software/coreutils/)
+    - Basic software like `ls`, `cat`, etc...
+  - [QEMU](https://www.qemu.org/)
+    - The machine emulator
 
 - Create a new VHD and complete the OS installation:
 
