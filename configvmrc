@@ -30,3 +30,8 @@ ssh_guest_username="vm"
 
 shared_data_path="/home/parabola/dev/unife/qvm/shared_host_guest"
 mount_tag="host_share"
+
+# VNC stuff
+host_ip_address="192.168.1.1"
+host_username="parabola"
+

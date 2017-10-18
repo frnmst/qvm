@@ -31,6 +31,9 @@ It can handle:
     - Basic software like `ls`, `cat`, etc...
   - [QEMU](https://www.qemu.org/)
     - The machine emulator
+  - [TigerVNC](http://www.tigervnc.org)
+    - If you need to use the vm remotely from a coumputer which does not 
+      support virtualization.
 
 - Create a new VHD and complete the OS installation:
 
@@ -53,6 +56,23 @@ It can handle:
 
         host_share   /home/vm/shared    9p      noauto,x-systemd.automount,trans=virtio,version=9p2000.L   0 0
 
+## VNC options
+
+The VNC options in this script allow you to connect 
+
+To do this you must run QVM with one of the VNC option on the server side.
+On the client side you simply edit the `host_ip_address` and `host_username` 
+variables configuration file.
+
+For example, on the server side we could install the virtual machine remotely 
+like this:
+
+    $ ./qvm --install-vnc
+
+And on the client side:
+
+    $ ./qvm -r
+
 
 ## Help
 
@@ -67,12 +87,16 @@ It can handle:
             --delete-orig           delete original vhd
         -h, --help                  print this help
         -i, --install               install img on vhd
+            --install-vnc           install img on vhd via vnc
         -n, --run-nox               run vm without opening a graphical window
                                     (useful for background jobs like SSH)
             --run-nox-orig          run-orig and run-nox combined
         -s, --mkdir-shared          create shared directory
+        -r, --remote                connect to a vnc instance via ssh
         -x, --run                   run vm
+            --run-vnc               run vm with vnc
             --run-orig              run from original vhd
+            --run-orig-vnc          run from original vhd with vnc
 
 
     Only a single option is accepted.

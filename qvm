@@ -26,12 +26,16 @@ Options:
         --delete-orig           delete original vhd
     -h, --help                  print this help
     -i, --install               install img on vhd
+        --install-vnc           install img on vhd via vnc
     -n, --run-nox               run vm without opening a graphical window
                                 (useful for background jobs like SSH)
         --run-nox-orig          run-orig and run-nox combined
     -s, --mkdir-shared          create shared directory
+    -r, --remote                connect to a vnc instance via ssh
     -x, --run                   run vm
+        --run-vnc               run vm with vnc
         --run-orig              run from original vhd
+        --run-orig-vnc          run from original vhd with vnc
 
 
 Only a single option is accepted.
@@ -82,8 +86,16 @@ delete()
 
 installs()
 {
+    local argc1="$1"
+    local enable_vnc=""
+
+    if [ "$argc1" = "vnc" ]; then
+        enable_vnc="-monitor pty -vnc 127.0.0.1:0"
+    fi
+
     qemu-system-x86_64 -m "$vm_memory" \
 -enable-kvm \
+$enable_vnc \
 -cdrom "$img_name" \
 -boot order=d \
 "$vhd_name" &
@@ -100,17 +112,21 @@ run()
     local argc2="$2"
     local vhd=""
     local display=""
+    local enable_vnc=""
+
+    if [ "$argc1" = "none" ]; then
+        display="none"
+    elif [ "$argc1" = "gtk" ]; then
+        display="gtk"
+    elif [ "$argc1" = "vnc" ]; then
+        display="none"
+        enable_vnc="-monitor pty -vnc 127.0.0.1:0"
+    fi
 
     if [ "$argc2" = "orig" ]; then
         vhd="$vhd_name"
     else
         vhd=""$vhd_name".mod"
-    fi
-
-    if [ "$argc1" = "none" ]; then
-        display="none"
-    else
-        display="gtk"
     fi
 
     export QEMU_AUDIO_DRV=alsa
@@ -119,6 +135,7 @@ run()
         qemu-system-x86_64 \
 -m "$vm_memory" \
 -enable-kvm \
+$enable_vnc \
 -device e1000,netdev=user.0 \
 -netdev user,\
 id=user.0,hostfwd=tcp::"$host_port"-:"$guest_port",\
@@ -134,12 +151,18 @@ security_model=none,mount_tag="$mount_tag" \
     fi
 }
 
+remote()
+{
+    ssh -N -f -L 5901:127.0.0.1:5900 "$host_username"@"$host_ip_address"
+    vncviewer 127.0.0.1:1
+}
+
 main()
 {
     local argc="$1"
     local options="abcdhinrx"
     local long_options="attach,backup,create,delete,delete-orig\
-,help,install,run,run-orig,run-nox,run-nox-orig"
+,help,install,run,run-orig,run-nox,run-nox-orig,run-vnc,run-orig-vnc,remote,install-vnc"
     local opts
     local opt
 
@@ -164,11 +187,16 @@ main()
                  --delete-orig )        delete orig     ;;
             -h | --help )               help            ;;
             -i | --install )            installs        ;;
+                 --install-vnc )        installs vnc    ;;
             -n | --run-nox )            run none        ;;
                  --run-nox-orig )       run none orig   ;;
+            -r | --remote )             remote          ;;
             -s | --mkdir-shared )       shared          ;;
             -x | --run )                run gtk         ;;
                  --run-orig )           run gtk orig    ;;
+                 --run-vnc )            run vnc         ;;
+                 --run-orig-vnc )       run vnc orig    ;;
+
         esac
     done
 }
