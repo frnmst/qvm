@@ -78,7 +78,7 @@ And on the client side:
 
 At this point you should see your virtual machine running in a TigerVNC window.
 
-Note: the VNC traffic goes through SSH TCP forwarding, so it is ecncrypted.
+Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
 
 ## Help
 
