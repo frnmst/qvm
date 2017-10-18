@@ -58,11 +58,14 @@ It can handle:
 
 ## VNC options
 
-The VNC options in this script allow you to connect 
+The VNC options in this script allow you to connect to a remote instance of 
+QEMU. This is particularly useful, for example, if your local machine 
+processor does not support virtualization. The only thing to do is to make 
+the server's port (`5900`) reachable from the clients.
 
-To do this you must run QVM with one of the VNC option on the server side.
-On the client side you simply edit the `host_ip_address` and `host_username` 
-variables configuration file.
+You must then run QVM with one of the VNC options on the server side.
+On the client side you must simply edit the `host_ip_address` and 
+`host_username` variables in the configuration file.
 
 For example, on the server side we could install the virtual machine remotely 
 like this:
@@ -73,6 +76,7 @@ And on the client side:
 
     $ ./qvm -r
 
+At this point you should see your virtual machine running in a TigerVNC window.
 
 ## Help
 
