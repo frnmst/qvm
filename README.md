@@ -56,6 +56,14 @@ It can handle:
 
         host_share   /home/vm/shared    9p      noauto,x-systemd.automount,trans=virtio,version=9p2000.L   0 0
 
+- You can also access the virtual machine through SSH:
+
+        $ ./qvm -a
+
+  or, if you are working on another computer,
+
+        $ ./qvm --attach-remote
+
 ## VNC options
 
 The VNC options in this script allow you to connect to a remote instance of 
@@ -86,7 +94,8 @@ Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
     Trivial management of 64 bit virtual machines with qemu.
 
     Options:
-        -a, --attach                connect via SSH
+        -a, --attach                connect to SSH locally
+            --attach-remote         connect to SSH remotely
         -b, --backup                backup vhd
         -c, --create                create new vhd
         -d, --delete                delete vhd backup
@@ -105,11 +114,11 @@ Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
             --run-orig-vnc          run from original vhd with vnc
 
 
-    Only a single option is accepted.
-    By default, the backup vhd is run.
+        Only a single option is accepted.
+        By default, the backup vhd is run.
 
-    CC0
-    Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+        CC0
+        Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
 
 ## License
 

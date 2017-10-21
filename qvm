@@ -19,7 +19,8 @@ Usage: qvm [OPTION]
 Trivial management of 64 bit virtual machines with qemu.
 
 Options:
-    -a, --attach                connect via SSH
+    -a, --attach                connect to SSH locally
+        --attach-remote         connect to SSH remotely
     -b, --backup                backup vhd
     -c, --create                create new vhd
     -d, --delete                delete vhd backup
@@ -53,7 +54,16 @@ unrecognized_option()
 
 attach()
 {
-    ssh -p "$ssh_host_port" -l "$ssh_guest_username" 127.0.0.1
+    local argc="$1"
+    local address=""
+
+    if [ "$argc" = "locally" ]; then
+        address="127.0.0.1"
+    elif [ "$argc" = "remotely" ]; then
+        address="$host_ip_address"
+    fi
+
+    ssh -p "$ssh_host_port" -l "$ssh_guest_username" "$address"
 }
 
 backup()
@@ -161,8 +171,9 @@ main()
 {
     local argc="$1"
     local options="abcdhinrx"
-    local long_options="attach,backup,create,delete,delete-orig\
-,help,install,run,run-orig,run-nox,run-nox-orig,run-vnc,run-orig-vnc,remote,install-vnc"
+    local long_options="attach,backup,create,delete,delete-orig,\
+help,install,run,run-orig,run-nox,run-nox-orig,run-vnc,run-orig-vnc,remote,install-vnc,\
+attach-remote"
     local opts
     local opt
 
@@ -180,7 +191,8 @@ main()
     for opt in $opts; do
         case "$opt" in
             -- )                                        ;;
-            -a | --attach )             attach          ;;
+            -a | --attach )             attach locally  ;;
+                 --attach-remote )      attach remotely ;;
             -b | --backup )             backup          ;;
             -c | --create )             create          ;;
             -d | --delete )             delete          ;;
