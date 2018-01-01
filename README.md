@@ -12,8 +12,8 @@ It can handle:
   two ports is SSH (so admin gets simpler).
 - Connection via SSH.
 - Shared directory between host and guest.
-- Last, but not least, running the virtual machine with all
-  these options.
+- Last, but not least, running the virtual machine with a
+  combination of the previous options.
 
 ## Setup information and usage
 
@@ -87,6 +87,24 @@ And on the client side:
 At this point you should see your virtual machine running in a TigerVNC window.
 
 Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
+
+## Interesting applications
+
+If you happen to use a form of network filesystem, such as 
+[GlusterFS](http://docs.gluster.org/en/latest/),
+you can keep the machine hard disk off the host and put it on another computer.
+There might be a some form of lag depending on the hardware, protocol and 
+network connections.
+
+An example with GlusterFS might be:
+
+    vhd_name="gluster+tcp://server-address/gluster-volume/"$img_name"."$vhd_type""
+
+This will work provided that you install the QEMU GlusterFS block module 
+package (if it's not already present in the QEMU package itself).
+
+You should consult the QEMU's manual to learn about all possible compatible 
+network filesystems.
 
 ## Help
 

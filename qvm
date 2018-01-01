@@ -141,8 +141,7 @@ run()
 
     export QEMU_AUDIO_DRV=alsa
 
-    if [ -f "$vhd" ]; then
-        qemu-system-x86_64 \
+    qemu-system-x86_64 \
 -m "$vm_memory" \
 -enable-kvm \
 $enable_vnc \
@@ -154,11 +153,7 @@ hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
 security_model=none,mount_tag="$mount_tag" \
 -soundhw ac97 \
 -display "$display" \
-"$vhd" &
-    else
-        printf "VHD file \""$vhd"\" is missing.\n"
-        exit 1
-    fi
+-drive file="$vhd" &
 }
 
 remote()
