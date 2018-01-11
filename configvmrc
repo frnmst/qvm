@@ -15,23 +15,37 @@ img_name="parabola-mate-2016.07.27-dual.iso"
 vhd_size="16G"
 vhd_type="qcow2"
 vhd_name=""$img_name"."$vhd_type""
+
+# Total RAM assigned to the vm.
 vm_memory="4G"
 
 # Shared port.
 host_port="5555"
 # vm port.
 guest_port="3050"
+
 # Shared port.
 ssh_host_port="2222"
 # vm port.
 ssh_guest_port="22"
-# vm guest user name
+
+# guest user name useful to conect with ssh.
 ssh_guest_username="vm"
 
-shared_data_path="/home/parabola/dev/unife/qvm/shared_host_guest"
+shared_data_path="/home/user/qvm/shared_host_guest"
 mount_tag="host_share"
 
-# VNC stuff
+#
+# VNC stuff and automatical remote startup stuff
+#
 host_ip_address="192.168.1.1"
 host_username="parabola"
+
+#
+# Automatical remote startup stuff only
+#
+# The port used to connecting directly to the host computer.
+ssh_exposed_port="22"
+host_qvm_script_directory="/home/remote/qvm"
+seconds_before_connection_attempt="30"
 

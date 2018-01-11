@@ -2,7 +2,26 @@
 
 Trivial management of 64 bit virtual machines with qemu.
 
-## What this script will do
+# Table of contents
+
+[](TOC)
+
+- [qvm](#qvm)
+- [Table of contents](#table-of-contents)
+- [What this script will do](#what-this-script-will-do)
+- [Setup information and usage](#setup-information-and-usage)
+- [VNC options](#vnc-options)
+- [Interesting applications](#interesting-applications)
+    - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
+    - [Automatical remote startup](#automatical-remote-startup)
+- [Help](#help)
+    - [qvm.sh](#qvm-sh)
+    - [automatical_remote_startup.sh](#automatical-remote-startup-sh)
+- [License](#license)
+
+[](TOC)
+
+# What this script will do
 
 It can handle:
 
@@ -15,7 +34,7 @@ It can handle:
 - Last, but not least, running the virtual machine with a
   combination of the previous options.
 
-## Setup information and usage
+# Setup information and usage
 
 - You need a 64 bit machine with virtualization technology and more than 4 GB 
   of RAM.
@@ -64,7 +83,7 @@ It can handle:
 
         $ ./qvm --attach-remote
 
-## VNC options
+# VNC options
 
 The VNC options in this script allow you to connect to a remote instance of 
 QEMU. This is particularly useful, for example, if your local machine 
@@ -88,7 +107,9 @@ At this point you should see your virtual machine running in a TigerVNC window.
 
 Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
 
-## Interesting applications
+# Interesting applications
+
+## Virtual machine hard disk over a network protocol
 
 If you happen to use a form of network filesystem, such as 
 [GlusterFS](http://docs.gluster.org/en/latest/),
@@ -106,7 +127,25 @@ package (if it's not already present in the QEMU package itself).
 You should consult the QEMU's manual to learn about all possible compatible 
 network filesystems.
 
-## Help
+## Automatical remote startup
+
+To automatically start the virtual machine from a non-host computer you can
+use the `automatical_remote_startup.sh` script. Make sure that both the local 
+non-host and the remote host computer have a copy of the QVM repository with 
+the variables correctly set in the `configrc` file.
+
+This script will start the virtual machine if on the host computer no other
+virtual machine is running. You can use either the VNC or the headless 
+connection. Both of them require that SSH is configured correctly on the  
+computers: the host must be reachable from the client via SSH.
+This can be verified by using the `--attach-remote` option.
+
+Once you've checked that everyting works, you can add a command alias in 
+your shell configuration file (e.g: `~/.bashrc`).
+
+# Help
+
+## qvm.sh
 
     Usage: qvm [OPTION]
     Trivial management of 64 bit virtual machines with qemu.
@@ -138,6 +177,27 @@ network filesystems.
         CC0
         Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
 
-## License
+## automatical_remote_startup.sh
+
+    Usage: automatical_remote_startup.sh [OPTION]
+    Start QEMU on a remote host computer and connect to it
+
+    Options:
+        -d, --default           start the vm in headless mode and connect to it
+                                with SSH
+        -h, --help              print this help
+        -u, --use-vnc           start the vm in VNC mode and connect to it with the
+                                VNC client
+
+
+    Only a single option is accepted.
+    By default, a headless connection will be initialized.
+    Preconditions for this to work is to setup SSH correctly on both
+    computers.
+
+    CC0
+    Written in 2018 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+
+# License
 
 CC0.
