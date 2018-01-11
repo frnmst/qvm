@@ -16,8 +16,8 @@
 # This script is intended to be used along with a shell alias. #
 ################################################################
 
-# Source variables globally.
-. ./configvmrc
+program_name="$0"
+local_path="${program_name%/automatical_remote_startup.sh}"
 
 help()
 {
@@ -59,10 +59,9 @@ connect()
     fi
 
     if [ "$argc1" = "use_vnc" ]; then
-        ./qvm --remote &
+        "${local_path}"/qvm --remote &
     else
-	echo in
-        ./qvm --attach-remote
+        "${local_path}"/qvm --attach-remote
     fi
 }
 
@@ -88,7 +87,7 @@ main()
     eval set -- "$opts"
 
     # Source variables globally.
-    . ./configvmrc
+    . "${local_path}"/configvmrc
 
     for opt in $opts; do
         case "$opt" in

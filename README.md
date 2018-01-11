@@ -140,8 +140,10 @@ connection. Both of them require that SSH is configured correctly on the
 computers: the host must be reachable from the client via SSH.
 This can be verified by using the `--attach-remote` option.
 
-Once you've checked that everyting works, you can add a command alias in 
-your shell configuration file (e.g: `~/.bashrc`).
+Once you have checked that everyting works, you can add a command alias in 
+your shell configuration file (e.g: `~/.bashrc`), something like:
+
+    alias vm='/home/user/scripts/qvm/automatical_remote_startup.sh'
 
 # Help
 

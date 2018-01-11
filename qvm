@@ -12,6 +12,9 @@
 # with this software. If not, see 
 # <http://creativecommons.org/publicdomain/zero/1.0/>. 
 
+program_name="$0"
+local_path="${program_name%/qvm}"
+
 help()
 {
     cat <<-EOF
@@ -181,7 +184,7 @@ attach-remote"
     eval set -- "$opts"
 
     # Source variables globally.
-    . ./configvmrc
+    . "${local_path}"/configvmrc
 
     for opt in $opts; do
         case "$opt" in
