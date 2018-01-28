@@ -15,8 +15,8 @@ Trivial management of 64 bit virtual machines with qemu.
     - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
     - [Automatical remote startup](#automatical-remote-startup)
 - [Help](#help)
-    - [qvm.sh](#qvm-sh)
-    - [automatical_remote_startup.sh](#automatical-remote-startup-sh)
+    - [qvm.sh](#qvmsh)
+    - [automatical_remote_startup.sh](#automatical_remote_startupsh)
 - [License](#license)
 
 [](TOC)
