@@ -107,6 +107,9 @@ installs()
     fi
 
     qemu-system-x86_64 -m "$vm_memory" \
+-device e1000,netdev=user.0 \
+-netdev user,\
+id=user.0,hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
 -enable-kvm \
 $enable_vnc \
 -cdrom "$img_name" \
