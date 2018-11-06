@@ -16,6 +16,10 @@ vhd_size="16G"
 vhd_type="qcow2"
 vhd_name=""$img_name"."$vhd_type""
 
+# Total number of cores assigned to the vm.
+# You should set the appropriate number to have a better experience.
+number_of_cores="1"
+
 # Total RAM assigned to the vm.
 vm_memory="4G"
 

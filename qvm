@@ -157,6 +157,7 @@ id=user.0,hostfwd=tcp::"$host_port"-:"$guest_port",\
 hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
 -virtfs local,path="$shared_data_path",\
 security_model=none,mount_tag="$mount_tag" \
+-smp "$number_of_cores" \
 -soundhw ac97 \
 -display "$display" \
 -drive file="$vhd" &
