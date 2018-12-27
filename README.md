@@ -2,7 +2,7 @@
 
 Trivial management of 64 bit virtual machines with qemu.
 
-# Table of contents
+## Table of contents
 
 [](TOC)
 
@@ -21,7 +21,7 @@ Trivial management of 64 bit virtual machines with qemu.
 
 [](TOC)
 
-# What this script will do
+## What this script will do
 
 It can handle:
 
@@ -34,15 +34,13 @@ It can handle:
 - Last, but not least, running the virtual machine with a
   combination of the previous options.
 
-# Setup information and usage
+## Setup information and usage
 
 - You need a 64 bit machine with virtualization technology and more than 4 GB 
   of RAM.
-
 - Modify `configvmrc` based on your needs.
   Variables are self-explanatory and I have kept mine 
   as an example.
-
 - Install the following dependencies
   - [GNU Bash](http://www.gnu.org/software/bash/bash.html)
     - Scipting language interpreter
@@ -53,25 +51,22 @@ It can handle:
   - [TigerVNC](http://www.tigervnc.org)
     - If you need to use the vm remotely from a coumputer which does not 
       support virtualization.
-
 - Create a new VHD and complete the OS installation:
 
         $ ./qvm -c
         $ ./qvm -i
 
 - Optionally enable the SSH daemon on the guest machine.
-
 - Optionally create a new backup VHD:
 
         $ ./qvm -b
 
 - Now you can run the virtual machine either using the original or the backup 
-  VHD. By deault if you run `./qvm` the virtual machine will run in graphics 
+  VHD. If you run `./qvm -x` the virtual machine will run in graphics 
   mode using the backup hard disk.
-
-- Optionally add the following in the gues machine's `/etc/fstab`, to enable 
-  the shared directory automatically (no mount commands of any
-  sort).
+- Optionally add the following in the guest machine fstab file (`/etc/fstab`), 
+  to enable the shared directory automatically. This avoids entering mount 
+  commands by hand.
 
         host_share   /home/vm/shared    9p      noauto,x-systemd.automount,trans=virtio,version=9p2000.L   0 0
 
@@ -83,7 +78,7 @@ It can handle:
 
         $ ./qvm --attach-remote
 
-# VNC options
+## VNC options
 
 The VNC options in this script allow you to connect to a remote instance of 
 QEMU. This is particularly useful, for example, if your local machine 
@@ -127,7 +122,7 @@ package (if it's not already present in the QEMU package itself).
 You should consult the QEMU's manual to learn about all possible compatible 
 network filesystems.
 
-## Automatic remote startup
+### Automatic remote startup
 
 To automatically start the virtual machine from a non-host computer you can
 use the `automatic_remote_startup.sh` script. Make sure that both the local 
@@ -145,9 +140,9 @@ your shell configuration file (e.g: `~/.bashrc`), something like:
 
     alias vm='/home/user/scripts/qvm/automatic_remote_startup.sh'
 
-# Help
+## Help
 
-## qvm.sh
+### qvm
 
     Usage: qvm [OPTION]
     Trivial management of 64 bit virtual machines with qemu.
@@ -179,9 +174,9 @@ your shell configuration file (e.g: `~/.bashrc`), something like:
         CC0
         Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
 
-## automatical_remote_startup.sh
+### automatic_remote_startup.sh
 
-    Usage: automatical_remote_startup.sh [OPTION]
+    Usage: automatic_remote_startup.sh [OPTION]
     Start QEMU on a remote host computer and connect to it
 
     Options:
@@ -200,6 +195,6 @@ your shell configuration file (e.g: `~/.bashrc`), something like:
     CC0
     Written in 2018 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
 
-# License
+## License
 
 Creative Commons Zero (CC0).
