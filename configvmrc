@@ -10,53 +10,83 @@
 # with this software. If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-img_name="parabola-mate-2016.07.27-dual.iso"
+# The path of the OS ISO.
+IMG_NAME='parabola-mate-2016.07.27-dual.iso'
 
-# Size assigned to the vm's HDD.
-vhd_size="16G"
+#
+# Virtual Hard Disk (VHD).
+#
 
 # You should leave the following as-is.
-vhd_name=""$img_name".qcow2"
+VHD_NAME=""${IMG_NAME}".qcow2"
 
-# Total number of cores assigned to the vm.
-# You should set the appropriate number to have a better experience.
-number_of_cores="1"
+# Size assigned to the vm's HDD.
+VHD_SIZE='16G'
+
+#
+# RAM and Processor.
+#
 
 # Total RAM assigned to the vm.
-vm_memory="4G"
+vm_memory='4G'
+
+# Total number of processor cores assigned to the vm.
+number_of_cores=1
+
+#
+# Ports.
+#
 
 # Shared port.
-host_port_1="5555"
-# vm port.
-guest_port_1="3050"
+HOST_PORT_1=5555
+
+# A vm port.
+GUEST_PORT_1=3050
 
 # Another shared port.
-host_port_2="5556"
-# vm port.
-guest_port_2="3051"
+HOST_PORT_2=5556
+
+# Another vm port.
+GUEST_PORT_2=3051
+
+#
+# SSH.
+#
 
 # Shared port.
-ssh_host_port="2222"
+SSH_HOST_PORT=2222
+
 # vm port.
-ssh_guest_port="22"
+SSH_GUEST_PORT=22
 
 # guest user name useful to connect with ssh.
-ssh_guest_username="vm"
-
-shared_data_path="/home/user/qvm/shared_host_guest"
-mount_tag="host_share"
+SSH_GUEST_USERNAME='vm'
 
 #
-# VNC stuff and automatical remote startup stuff
+# Shared directory.
 #
-host_ip_address="192.168.1.1"
-host_username="parabola"
+
+SHARED_DATA_PATH='/home/user/qvm/shared_host_guest'
+
+MOUNT_TAG='host_share'
 
 #
-# Automatical remote startup stuff only.
+# VNC stuff and automatic remote startup stuff
 #
+
+HOST_IP_ADDRESS='192.168.1.1'
+
+HOST_USERNAME='parabola'
+
+#
+# Automatic remote startup stuff only.
+#
+
 # The port used to connecting directly to the host computer.
-ssh_exposed_port="22"
-host_qvm_script_directory="/home/remote/qvm"
-seconds_before_connection_attempt="25"
+SSH_EXPOSED_PORT=22
+
+HOST_QVM_SCRIPT_DIRECTORY='/home/remote/qvm'
+
+
+SECONDS_BEFORE_CONNECTION_ATTEMPT=25
 
