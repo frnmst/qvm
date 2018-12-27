@@ -26,13 +26,11 @@ Trivial management of 64 bit virtual machines with qemu.
 It can handle:
 
 - Virtual hard disk creation, backup and deletion.
-- Basic network management: two ports are exposed to the host
-  machine (but you can add as many as you want). One of these 
-  two ports is SSH (so admin gets simpler).
-- Connection via SSH.
+- Basic network management: three ports are exposed to the host
+  machine (but you can add as many as you want). One of these two ports is 
+  SSH.
 - Shared directory between host and guest.
-- Last, but not least, running the virtual machine with a
-  combination of the previous options.
+- Running the virtual machine with a combination of the previous options.
 
 ## Setup information and usage
 
@@ -120,7 +118,7 @@ network connections.
 
 An example with GlusterFS might be:
 
-    vhd_name="gluster+tcp://server-address/gluster-volume/"$img_name"."$vhd_type""
+    VHD_NAME="gluster+tcp://server-address/gluster-volume/"${IMG_NAME}"."${VHD_TYPE}""
 
 This will work provided that you install the QEMU GlusterFS block module 
 package (if it's not already present in the QEMU package itself).
@@ -150,56 +148,11 @@ your shell configuration file (e.g: `~/.bashrc`), something like:
 
 ### qvm
 
-    Usage: qvm [OPTION]
-    Trivial management of 64 bit virtual machines with qemu.
-
-    Options:
-        -a, --attach                connect to SSH locally
-            --attach-remote         connect to SSH remotely
-        -b, --backup                backup vhd
-        -c, --create                create new vhd
-        -d, --delete                delete vhd backup
-            --delete-orig           delete original vhd
-        -h, --help                  print this help
-        -i, --install               install img on vhd
-            --install-vnc           install img on vhd via vnc
-        -n, --run-nox               run vm without opening a graphical window
-                                    (useful for background jobs like SSH)
-            --run-nox-orig          run-orig and run-nox combined
-        -s, --mkdir-shared          create shared directory
-        -r, --remote                connect to a vnc instance via ssh
-        -x, --run                   run vm
-            --run-vnc               run vm with vnc
-            --run-orig              run from original vhd
-            --run-orig-vnc          run from original vhd with vnc
-
-
-        Only a single option is accepted.
-        By default, the backup vhd is run.
-
-        CC0
-        Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+FIXME
 
 ### automatic_remote_startup.sh
 
-    Usage: automatic_remote_startup.sh [OPTION]
-    Start QEMU on a remote host computer and connect to it
-
-    Options:
-        -d, --default           start the vm in headless mode and connect to it
-                                with SSH
-        -h, --help              print this help
-        -u, --use-vnc           start the vm in VNC mode and connect to it with the
-                                VNC client
-
-
-    Only a single option is accepted.
-    By default, a headless connection will be initialized.
-    Preconditions for this to work is to setup SSH correctly on both
-    computers.
-
-    CC0
-    Written in 2018 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+FIXME
 
 ## License
 
