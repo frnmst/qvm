@@ -56,14 +56,14 @@ installs()
     [ "${display}" = 'vnc' ] && enable_vnc='-monitor pty -vnc 127.0.0.1:0'
 
     qemu-system-x86_64 -m "${VM_MEMORY}" \
--device e1000,netdev=user.0 \
--netdev user,\
-id=user.0,hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
--enable-kvm \
-${enable_vnc} \
--cdrom "${IMG_NAME}" \
--boot order=d \
-"${VHD_NAME}" &
+        -device e1000,netdev=user.0 \
+        -netdev user,id=user.0,\
+hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
+        -enable-kvm \
+        ${enable_vnc} \
+        -cdrom "${IMG_NAME}" \
+        -boot order=d \
+        "${VHD_NAME}" &
 }
 
 shared()

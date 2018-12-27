@@ -36,6 +36,8 @@ It can handle:
 
 ## Setup information and usage
 
+### Prerequisites
+
 - You need a 64 bit machine with virtualization technology and more than 4 GB 
   of RAM.
 - Modify `configvmrc` based on your needs.
@@ -51,7 +53,11 @@ It can handle:
   - [TigerVNC](http://www.tigervnc.org)
     - If you need to use the vm remotely from a coumputer which does not 
       support virtualization.
-- Create a new VHD and complete the OS installation:
+
+### Setup
+
+- Create a new virtual hard disk and complete the OS installation which 
+  can also be done via SSH.
 
         $ ./qvm -c
         $ ./qvm -i
@@ -62,13 +68,13 @@ It can handle:
         $ ./qvm -b
 
 - Now you can run the virtual machine either using the original or the backup 
-  VHD. If you run `./qvm -x` the virtual machine will run in graphics 
-  mode using the backup hard disk.
+  virtual hard disk. If you run `./qvm -x` the virtual machine will run in 
+  graphics mode using the backup hard disk.
 - Optionally add the following in the guest machine fstab file (`/etc/fstab`), 
   to enable the shared directory automatically. This avoids entering mount 
   commands by hand.
 
-        host_share   /home/vm/shared    9p      noauto,x-systemd.automount,trans=virtio,version=9p2000.L   0 0
+        host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
 
 - You can also access the virtual machine through SSH:
 
