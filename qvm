@@ -12,7 +12,7 @@
 # with this software. If not, see 
 # <http://creativecommons.org/publicdomain/zero/1.0/>. 
 
-program_name="$0"
+program_name="${0}"
 local_path="${program_name%/qvm}"
 
 help()
@@ -32,8 +32,8 @@ Options:
     -i, --install               install img on vhd
         --install-vnc           install img on vhd via vnc
     -n, --run-nox               run vm without opening a graphical window
-                                (useful for background jobs like SSH)
-        --run-nox-orig          run-orig and run-nox combined
+                                which is useful for background jobs like SSH
+        --run-nox-orig          '--run-orig' and '--run-nox' combined
     -s, --mkdir-shared          create shared directory
     -r, --remote                connect to a vnc instance via ssh
     -x, --run                   run vm
@@ -45,147 +45,117 @@ Options:
 Only a single option is accepted.
 By default, the backup vhd is run.
 
-CC0
+CC0 License
 Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
 EOF
 }
 
-unrecognized_option()
+check_dependencies()
 {
-    printf "%s\n" "Try 'qvm --help' for more information"
-} 1>&2-
+    which \
+        qemu-system-x86_64 \
+        ssh \
+        vncviewer
+}
 
 attach()
 {
-    local argc="$1"
-    local address=""
+    local place="${1}"
+    local address=''
 
-    if [ "$argc" = "locally" ]; then
-        address="127.0.0.1"
-    elif [ "$argc" = "remotely" ]; then
-        address="$host_ip_address"
-    fi
-
-    ssh -p "$ssh_host_port" -l "$ssh_guest_username" "$address"
+    [ "${place}" = 'locally' ] && address='127.0.0.1' || address="${HOST_IP_ADDRESS}"
+    ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
 }
 
 backup()
 {
-    qemu-img create -f "$vhd_type" \
--b "$vhd_name" \
-"$vhd_name".mod
+    qemu-img create -f qcow2 -b "${VHD_NAME}" "${VHD_NAME}".mod
 }
 
 create()
 {
-    qemu-img create -f "$vhd_type" \
-"$vhd_name" \
-"$vhd_size"
+    qemu-img create -f qcow2 "${VHD_NAME}" "${VHD_SIZE}"
 }
 
 delete()
 {
-    local argc="$1"
-    local vhd=""
+    local vhd_type="${1}"
+    local vhd=''
 
-    if [ "$argc" = "orig" ]; then
-        vhd="$vhd_name"
-    else
-        vhd=""$vhd_name".mod"
-    fi
-
-    rm "$vhd"
+    [ "${vhd_type}" = 'orig' ] && vhd="${VHD_NAME}" || vhd=""${VHD_NAME}".mod"
+    rm "${vhd}"
 }
 
 installs()
 {
-    local argc1="$1"
-    local enable_vnc=""
+    local display="${1}"
+    local enable_vnc=''
 
-    if [ "$argc1" = "vnc" ]; then
-        enable_vnc="-monitor pty -vnc 127.0.0.1:0"
-    fi
+    [ "${display}" = 'vnc' ] && enable_vnc='-monitor pty -vnc 127.0.0.1:0'
 
-    qemu-system-x86_64 -m "$vm_memory" \
+    qemu-system-x86_64 -m "${VM_MEMORY}" \
 -device e1000,netdev=user.0 \
 -netdev user,\
-id=user.0,hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
+id=user.0,hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
 -enable-kvm \
-$enable_vnc \
--cdrom "$img_name" \
+${enable_vnc} \
+-cdrom "${IMG_NAME}" \
 -boot order=d \
-"$vhd_name" &
+"${VHD_NAME}" &
 }
 
 shared()
 {
-    mkdir -p "$shared_data_path"
+    mkdir -p "${SHARED_DATA_PATH}"
 }
 
 run()
 {
-    local argc1="$1"
-    local argc2="$2"
-    local vhd=""
-    local display=""
-    local enable_vnc=""
+    local display="${1}"
+    local vhd_type="${2}"
+    local vhd=''
+    local display=''
+    local enable_vnc=''
 
-    if [ "$argc1" = "none" ]; then
-        display="none"
-    elif [ "$argc1" = "gtk" ]; then
-        display="gtk"
-    elif [ "$argc1" = "vnc" ]; then
-        display="none"
-        enable_vnc="-monitor pty -vnc 127.0.0.1:0"
-    fi
+    [ "${display}" = 'vnc' ]  \
+        && display='none' \
+        && enable_vnc="-monitor pty -vnc 127.0.0.1:0"
+    [ "${vhd_type}" = 'orig' ] && vhd="${VHD_NAME}" || vhd=""${VHD_NAME}".mod"
 
-    if [ "$argc2" = "orig" ]; then
-        vhd="$vhd_name"
-    else
-        vhd=""$vhd_name".mod"
-    fi
-
+    # Adds ALSA audio support.
     export QEMU_AUDIO_DRV=alsa
 
+    # No spaces between the parameters of each option.
     qemu-system-x86_64 \
--m "$vm_memory" \
--enable-kvm \
-$enable_vnc \
--device e1000,netdev=user.0 \
--netdev user,\
-id=user.0,hostfwd=tcp::"$host_port"-:"$guest_port",\
-hostfwd=tcp::"$ssh_host_port"-:"$ssh_guest_port" \
--virtfs local,path="$shared_data_path",\
-security_model=none,mount_tag="$mount_tag" \
--smp "$number_of_cores" \
--soundhw ac97 \
--display "$display" \
--drive file="$vhd" &
+        -m "${VM_MEMORY}" \
+        -enable-kvm \
+        ${enable_vnc} \
+        -device e1000,netdev=user.0 \
+        -netdev user,id=user.0,\
+hostfwd=tcp::"${HOST_PORT_1}"-:"${GUEST_PORT_1}",\
+hostfwd=tcp::"${HOST_PORT_2}"-:"${GUEST_PORT_2}",\
+hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
+        -virtfs local,path="$SHARED_DATA_PATH",security_model=none,mount_tag="${MOUNT_TAG}" \
+        -smp ${NUMBER_OF_CORES} \
+        -soundhw ac97 \
+        -display "${display}" \
+        -drive file="${vhd}" &
 }
 
 remote()
 {
-    ssh -N -f -L 5901:127.0.0.1:5900 "$host_username"@"$host_ip_address"
+    ssh -N -f -L 5901:127.0.0.1:5900 "${HOST_USERNAME}"@"${HOST_IP_ADDRESS}"
     vncviewer 127.0.0.1:1
 }
 
 main()
 {
-    local argc="$1"
     local options="abcdhinrx"
     local long_options="attach,backup,create,delete,delete-orig,\
 help,install,run,run-orig,run-nox,run-nox-orig,run-vnc,run-orig-vnc,remote,install-vnc,\
 attach-remote"
-    local opts
-    local opt
 
-    [ -z "$argc" ] && argc="-x"
-
-    opts="$(getopt --options $options --longoptions $long_options -- $argc)"
-
-    [ $? -ne 0 ] && unrecognized_option && return 1
-
-    eval set -- "$opts"
+    [ -z "$argc" ] && argc='-x'
 
     # Source variables globally.
     . "${local_path}"/configvmrc
@@ -214,5 +184,3 @@ attach-remote"
         esac
     done
 }
-
-main "$*"

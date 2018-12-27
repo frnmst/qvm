@@ -12,9 +12,11 @@
 
 img_name="parabola-mate-2016.07.27-dual.iso"
 
+# Size assigned to the vm's HDD.
 vhd_size="16G"
-vhd_type="qcow2"
-vhd_name=""$img_name"."$vhd_type""
+
+# You should leave the following as-is.
+vhd_name=""$img_name".qcow2"
 
 # Total number of cores assigned to the vm.
 # You should set the appropriate number to have a better experience.
@@ -24,16 +26,21 @@ number_of_cores="1"
 vm_memory="4G"
 
 # Shared port.
-host_port="5555"
+host_port_1="5555"
 # vm port.
-guest_port="3050"
+guest_port_1="3050"
+
+# Another shared port.
+host_port_2="5556"
+# vm port.
+guest_port_2="3051"
 
 # Shared port.
 ssh_host_port="2222"
 # vm port.
 ssh_guest_port="22"
 
-# guest user name useful to conect with ssh.
+# guest user name useful to connect with ssh.
 ssh_guest_username="vm"
 
 shared_data_path="/home/user/qvm/shared_host_guest"
@@ -46,10 +53,10 @@ host_ip_address="192.168.1.1"
 host_username="parabola"
 
 #
-# Automatical remote startup stuff only
+# Automatical remote startup stuff only.
 #
 # The port used to connecting directly to the host computer.
 ssh_exposed_port="22"
 host_qvm_script_directory="/home/remote/qvm"
-seconds_before_connection_attempt="30"
+seconds_before_connection_attempt="25"
 

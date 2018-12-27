@@ -127,10 +127,10 @@ package (if it's not already present in the QEMU package itself).
 You should consult the QEMU's manual to learn about all possible compatible 
 network filesystems.
 
-## Automatical remote startup
+## Automatic remote startup
 
 To automatically start the virtual machine from a non-host computer you can
-use the `automatical_remote_startup.sh` script. Make sure that both the local 
+use the `automatic_remote_startup.sh` script. Make sure that both the local 
 non-host and the remote host computer have a copy of the QVM repository with 
 the variables correctly set in the `configrc` file.
 
@@ -143,7 +143,7 @@ This can be verified by using the `--attach-remote` option.
 Once you have checked that everyting works, you can add a command alias in 
 your shell configuration file (e.g: `~/.bashrc`), something like:
 
-    alias vm='/home/user/scripts/qvm/automatical_remote_startup.sh'
+    alias vm='/home/user/scripts/qvm/automatic_remote_startup.sh'
 
 # Help
 
@@ -202,4 +202,4 @@ your shell configuration file (e.g: `~/.bashrc`), something like:
 
 # License
 
-CC0.
+Creative Commons Zero (CC0).
