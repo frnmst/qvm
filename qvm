@@ -106,7 +106,7 @@ hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
 
 remote()
 {
-    ssh -N -f -L 5901:127.0.0.1:5900 "${HOST_USERNAME}"@"${HOST_IP_ADDRESS}"
+    ssh -N -f -L 5901:127.0.0.1:5900 -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}"
     vncviewer 127.0.0.1:1
 }
 
