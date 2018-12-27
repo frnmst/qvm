@@ -80,19 +80,22 @@ main()
     # See some comments below.
     declare -a argc=("${!1}")
 
-    # Set the options. flag_f has an optional argument.
+    # Set the options.
     local getopt_short_options='abcdhinrx'
-    local getopt_long_options='attach,backup,create,delete,delete-orig,\
-help,install,run,run-orig,run-nox,run-nox-orig,run-vnc,run-orig-vnc,remote,install-vnc,\
-attach-remote'
+    local getopt_long_options='attach,backup,create,delete,help,install,run,\
+remote,install,vnc,nox'
 
     # Set the default values for the flags.
-    local flag_a=''
-    local flag_b=''
-    local flag_c=''
-    local flag_d='false'
-    local flag_e='false'
-    local flag_f='false'
+    local attach='false'
+    local backup='false'
+    local delete='false'
+    local install='false'
+    local nox='false'
+    local orig='false'
+    local remotely=''
+    local run='false'
+    local shared='false'
+    local vnc='false'
 
     local program_name="${0}"
     opts="$(getopt \
@@ -113,44 +116,33 @@ attach-remote'
     while [ "${1}" != '--' ]; do
         case "${1}" in
 
-            -a | --attach )             attach locally  ;;
+            -a | --attach )             attach='true'       ;;
 
-            --attach-remote )      attach remotely ;;
+            -b | --backup )             backup='true'       ;;
 
-            -b | --backup )             backup          ;;
+            -c | --create )             create='true'       ;;
 
-            -c | --create )             create          ;;
+            -d | --delete )             delete='true'       ;;
 
-            -d | --delete )             delete          ;;
+            -h | --help )               help                ;;
 
-                 --delete-orig )        delete orig     ;;
+            -i | --install )            install='true'      ;;
 
-            -h | --help )               help            ;;
+            -m | --mkdir-shared )       shared='true'       ;;
 
-            -i | --install )            installs        ;;
+            -n | --nox )                nox='nox'           ;;
 
-                 --install-vnc )        installs vnc    ;;
+            -o | --origin )             origin='origin'     ;;
 
-            -n | --run-nox )            run none        ;;
+            -r | --remote )             remote='remote'     ;;
 
-                 --run-nox-orig )       run none orig   ;;
+            -v | --vnc )                vnc='vnc'           ;;
 
-            -r | --remote )             remote          ;;
+            -x | --run )                run='true'          ;;
 
-            -s | --mkdir-shared )       shared          ;;
-
-            -x | --run )                run gtk         ;;
-
-            --run-orig )           run gtk orig    ;;
-
-            --run-vnc )            run vnc         ;;
-
-            --run-orig-vnc )       run vnc orig    ;;
         esac
         # Iterate through all arguments.
-        # shift 1
-        # EXCEPTION: break because we only need one argument.
-        break
+        shift 1
     done
 
     shift 1
@@ -162,33 +154,29 @@ attach-remote'
     # ./program -flag ''
     # This can also be done inside the option parser loop but to avoid nestings
     # I prefer it done here.
-    { [ -z "${flag_a}" ] \
-        || [ -z "${flag_b}" ]; } \
-        && getopt_error && return 1
+    # NOOP.
     [ "${print_flags}" = 'true' ] \
         && show_flags \
-            'flag_a' \
-            'flag_b' \
-            'flag_c' \
-            'flag_d' \
-            'flag_e' \
-            'flag_f' \
+            'attach' \
+            'backup' \
         && return 0
     [ "${help}" = 'true' ] && show_help && return 0
     # Override values of optional parameters.
-    # [ -z "${flag_f}" ] && flag_f='true'
+    # NOOP.
 
     # From now on you should call a function or an external program
     # using the values of the flag variables.
-
-    program_name="${0}"
-    local_path="${program_name%/qvm}"
-
-    # Source variables globally.
-    . "${local_path}"/configvmrc
-
-    [ "${flag_a}" = 'alpha' ] && do_something_alpha && return ${?}
-    [ "${flag_a}" = 'a' ] && do_something_a && return ${?}
+    local display='gtk'
+    [ "${attach}" = 'true' ] && { attach "${remote}"; return ${?}; }
+    [ "${backup}" = 'true' ] && { backup; return ${?}; }
+    [ "${create}" = 'true' ] && { create; return ${?}; }
+    [ "${delete}" = 'true' ] && { delete "${origin}"; return ${?}; }
+    [ "${install}" = 'true' ] && { installs "${vnc}"; return ${?}; }
+    if [ "${run}" = 'true' ]; then
+        [ "${vnc}" = 'vnc' ] && display='vnc'
+        [ "${nox}" = 'nox' ] && display='none'
+        { run "${display}" "${origin}"; return ${?}; }
+    [ "${shared}" = 'true' ] && { shared; return ${?}; }
 }
 
 # Test dependencies and versions.

@@ -44,7 +44,7 @@ delete()
     local vhd_type="${1}"
     local vhd=''
 
-    [ "${vhd_type}" = 'orig' ] && vhd="${VHD_NAME}" || vhd=""${VHD_NAME}".mod"
+    [ "${vhd_type}" = 'origin' ] && vhd="${VHD_NAME}" || vhd=""${VHD_NAME}".mod"
     rm "${vhd}"
 }
 
@@ -82,7 +82,7 @@ run()
     [ "${display}" = 'vnc' ]  \
         && display='none' \
         && enable_vnc="-monitor pty -vnc 127.0.0.1:0"
-    [ "${vhd_type}" = 'orig' ] && vhd="${VHD_NAME}" || vhd=""${VHD_NAME}".mod"
+    [ "${vhd_type}" = 'origin' ] && vhd="${VHD_NAME}" || vhd=""${VHD_NAME}".mod"
 
     # Adds ALSA audio support.
     export QEMU_AUDIO_DRV=alsa
@@ -112,5 +112,7 @@ remote()
 
 program_name="${0}"
 local_path="${program_name%/qvm}"
-. "${local_path}"/fbopt
+# Source variables globally.
+. "${local_path}"/configvmrc
+. "${local_path}"/fbopt_qvm
 

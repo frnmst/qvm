@@ -2,7 +2,7 @@
 
 # qvm - Trivial management of 64 bit virtual machines with qemu.
 #
-# Written in 2018 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
+# Written in 2018 by Franco Masotti/frnmst <franco.masotti@live.com>
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the public
