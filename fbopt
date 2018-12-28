@@ -119,7 +119,7 @@ remote,vnc,mkdir-shared,nox'
 
             -d | --delete )             delete='true'       ;;
 
-            -h | --help )               help                ;;
+            -h | --help )               help='true'         ;;
 
             -i | --install )            install='true'      ;;
 
