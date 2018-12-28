@@ -66,16 +66,21 @@ SSH_GUEST_USERNAME='vm'
 # Shared directory.
 #
 
+# The path that holds the shared files in the guest machine.
 SHARED_DATA_PATH='/home/user/qvm/shared_host_guest'
 
+# See the relevant readme section.
 MOUNT_TAG='host_share'
 
 #
 # VNC stuff and automatic remote startup stuff
 #
 
+# The ip address of the host machine. Useful for the attach action
+# or for starting up the vm from a different computer.
 HOST_IP_ADDRESS='192.168.1.1'
 
+# See the previous comment.
 HOST_USERNAME='parabola'
 
 #
@@ -83,6 +88,7 @@ HOST_USERNAME='parabola'
 #
 
 # The port used to connecting directly to the host computer.
+# This may differ from SSH_HOST_PORT.
 SSH_EXPOSED_PORT=22
 
 # The directory where the qvm script lies.

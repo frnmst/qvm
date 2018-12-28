@@ -6,21 +6,6 @@ Trivial management of 64 bit virtual machines with qemu.
 
 [](TOC)
 
-- [qvm](#qvm)
-- [Table of contents](#table-of-contents)
-- [What this script will do](#what-this-script-will-do)
-- [Setup information and usage](#setup-information-and-usage)
-- [VNC options](#vnc-options)
-- [Interesting applications](#interesting-applications)
-    - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
-    - [Automatical remote startup](#automatical-remote-startup)
-- [Help](#help)
-    - [qvm.sh](#qvmsh)
-    - [automatical_remote_startup.sh](#automatical_remote_startupsh)
-- [License](#license)
-
-[](TOC)
-
 ## What this script will do
 
 It can handle:
@@ -73,6 +58,8 @@ It can handle:
 
         host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
 
+## Connection to the machine
+
 - You can also access the virtual machine through SSH:
 
         $ ./qvm --attach
@@ -105,27 +92,7 @@ At this point you should see your virtual machine running in a TigerVNC window.
 
 Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
 
-# Interesting applications
-
-## Virtual machine hard disk over a network protocol
-
-If you happen to use a form of network filesystem, such as 
-[GlusterFS](http://docs.gluster.org/en/latest/),
-you can keep the machine hard disk off the host and put it on another computer.
-There might be a some form of lag depending on the hardware, protocol and 
-network connections.
-
-An example with GlusterFS might be:
-
-    VHD_NAME="gluster+tcp://server-address/gluster-volume/"${IMG_NAME}"."${VHD_TYPE}""
-
-This will work provided that you install the QEMU GlusterFS block module 
-package (if it's not already present in the QEMU package itself).
-
-You should consult the QEMU's manual to learn about all possible compatible 
-network filesystems.
-
-### Automatic remote startup
+## Automatic remote startup
 
 # FIXME 
 
@@ -144,6 +111,26 @@ Once you have checked that everyting works, you can add a command alias in
 your shell configuration file (e.g: `~/.bashrc`), something like:
 
     alias vm='/home/user/scripts/qvm/automatic_remote_startup.sh'
+
+## Interesting applications
+
+### Virtual machine hard disk over a network protocol
+
+If you happen to use a form of network filesystem, such as 
+[GlusterFS](http://docs.gluster.org/en/latest/),
+you can keep the machine hard disk off the host and put it on another computer.
+There might be a some form of lag depending on the hardware, protocol and 
+network connections.
+
+An example with GlusterFS might be:
+
+    VHD_NAME="gluster+tcp://server-address/gluster-volume/"${IMG_NAME}"."${VHD_TYPE}""
+
+This will work provided that you install the QEMU GlusterFS block module 
+package (if it's not already present in the QEMU package itself).
+
+You should consult the QEMU's manual to learn about all possible compatible 
+network filesystems.
 
 ## Help
 
