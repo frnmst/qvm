@@ -73,7 +73,7 @@ hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
         "${VHD_NAME}" &
 }
 
-shared()
+mkdir_shared()
 {
     mkdir -p "${SHARED_DATA_PATH}"
 }

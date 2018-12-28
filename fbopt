@@ -192,7 +192,7 @@ remote,vnc,mkdir-shared,nox,print-flags'
         [ -z "${display}" ] && display='gtk'
         { run "${display}" "${origin}"; return ${?}; }
     fi
-    [ "${mkdir_shared}" = 'true' ] && { shared; return ${?}; }
+    [ "${mkdir_shared}" = 'true' ] && { mkdir_shared; return ${?}; }
 }
 
 # Test dependencies and versions.
