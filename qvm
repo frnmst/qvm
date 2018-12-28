@@ -61,12 +61,13 @@ installs()
 
     [ "${display}" = 'vnc' ] && enable_vnc='-monitor pty -vnc 127.0.0.1:0'
 
-    qemu-system-x86_64 -m "${VM_MEMORY}" \
+    qemu-system-x86_64 -m "${MEMORY}" \
         -device e1000,netdev=user.0 \
         -netdev user,id=user.0,\
 hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
         -enable-kvm \
         ${enable_vnc} \
+        -smp ${NUMBER_OF_CORES} \
         -cdrom "${IMG_NAME}" \
         -boot order=d \
         "${VHD_NAME}" &
@@ -115,6 +116,9 @@ hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
 #    -h, --help              print this help
 #    -u, --use-vnc           start the vm in VNC mode and connect to it with the
 #                            VNC client
+#
+# FIXME
+#
 # Start and connect to a remote QVM instance hosted on a different machine.
 run_remote_instance()
 {

@@ -28,10 +28,10 @@ VHD_SIZE='16G'
 #
 
 # Total RAM assigned to the vm.
-vm_memory='4G'
+MEMORY='4G'
 
 # Total number of processor cores assigned to the vm.
-number_of_cores=1
+NUMBER_OF_CORES=1
 
 #
 # Ports.
@@ -90,4 +90,3 @@ HOST_QVM_SCRIPT_DIRECTORY='/home/remote/qvm'
 
 # Seconds to wait before connecting via SSH or VNC.
 SECONDS_BEFORE_CONNECTION_ATTEMPT=25
-

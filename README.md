@@ -57,13 +57,12 @@ It can handle:
 - Create a new virtual hard disk and complete the OS installation which 
   can also be done via SSH.
 
-        $ ./qvm -c
-        $ ./qvm -i
+        $ ./qvm --create && ./qvm --install
 
 - Optionally enable the SSH daemon on the guest machine.
 - Optionally create a new backup VHD:
 
-        $ ./qvm -b
+        $ ./qvm --backup
 
 - Now you can run the virtual machine either using the original or the backup 
   virtual hard disk. If you run `./qvm -x` the virtual machine will run in 
@@ -76,11 +75,11 @@ It can handle:
 
 - You can also access the virtual machine through SSH:
 
-        $ ./qvm -a
+        $ ./qvm --attach
 
   or, if you are working on another computer,
 
-        $ ./qvm --attach-remote
+        $ ./qvm --attach --remote
 
 ## VNC options
 
@@ -93,14 +92,14 @@ You must then run QVM with one of the VNC options on the server side.
 On the client side you must simply edit the `host_ip_address` and 
 `host_username` variables in the configuration file.
 
-For example, on the server side we could install the virtual machine remotely 
+For example, on the server side you could install the virtual machine remotely 
 like this:
 
-    $ ./qvm --install-vnc
+    $ ./qvm --install --vnc
 
 And on the client side:
 
-    $ ./qvm -r
+    $ ./qvm --attach --remote --vnc
 
 At this point you should see your virtual machine running in a TigerVNC window.
 
