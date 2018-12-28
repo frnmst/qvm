@@ -128,6 +128,8 @@ network filesystems.
 
 ### Automatic remote startup
 
+# FIXME 
+
 To automatically start the virtual machine from a non-host computer you can
 use the `automatic_remote_startup.sh` script. Make sure that both the local 
 non-host and the remote host computer have a copy of the QVM repository with 

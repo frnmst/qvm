@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+#
 # qvm - Trivial management of 64 bit virtual machines with qemu.
 #
 # Written in 2016 by Franco Masotti/frnmst <franco.masotti@student.unife.it>
@@ -16,6 +16,7 @@ check_dependencies()
 {
     which \
         qemu-system-x86_64 \
+        qemu-img \
         ssh \
         vncviewer
 }
@@ -23,10 +24,15 @@ check_dependencies()
 attach()
 {
     local place="${1}"
+    local display="${2}"
     local address=''
 
-    [ "${place}" = 'locally' ] && address='127.0.0.1' || address="${HOST_IP_ADDRESS}"
-    ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
+    [ "${place}" = 'remote' ] && address="${HOST_IP_ADDRESS}" || address='127.0.0.1'
+    [ -n "${place}" ] && ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
+    if [ "${display}" = 'vnc' ]; then
+        ssh -N -f -L 5901:127.0.0.1:5900 -l "${HOST_USERNAME}" "${address}"
+        vncviewer 127.0.0.1:1
+    fi
 }
 
 backup()
@@ -104,15 +110,37 @@ hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
         -drive file="${vhd}" &
 }
 
-remote()
+#    -d, --default           start the vm in headless mode and connect to it
+#                            with SSH
+#    -h, --help              print this help
+#    -u, --use-vnc           start the vm in VNC mode and connect to it with the
+#                            VNC client
+# Start and connect to a remote QVM instance hosted on a different machine.
+run_remote_instance()
 {
-    ssh -N -f -L 5901:127.0.0.1:5900 -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}"
-    vncviewer 127.0.0.1:1
+    local display="${1}"
+
+    if [ -z "$(ssh -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" "pgrep qemu")" ]; then
+        if [ "${display}" = "use_vnc" ]; then
+            ssh -p ${SSH_EXPOSED_PORT} -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" \
+                "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm --run-vnc" &
+        else
+            ssh -p ${SSH_EXPOSED_PORT} -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" \
+                "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm -n" &
+        fi
+        sleep ${SECONDS_BEFORE_CONNECTION_ATTEMPT}
+    fi
+
+    if [ "${display}" = "vnc" ]; then
+        "${local_path}"/qvm --remote &
+    else
+        "${local_path}"/qvm --attach-remote
+    fi
 }
 
 program_name="${0}"
 local_path="${program_name%/qvm}"
 # Source variables globally.
 . "${local_path}"/configvmrc
-. "${local_path}"/fbopt_qvm
+. "${local_path}"/fbopt
 

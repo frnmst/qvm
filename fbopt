@@ -27,23 +27,18 @@ By default, the backup vhd is run.
 Mandatory arguments to long options are mandatory for short options too.
 Options:
     -a, --attach                connect to SSH locally
-    --attach-remote             connect to SSH remotely
     -b, --backup                backup vhd
     -c, --create                create new vhd
     -d, --delete                delete vhd backup
-    --delete-orig               delete original vhd
     -h, --help                  print this help
     -i, --install               install img on vhd
-        --install-vnc           install img on vhd via vnc
-    -n, --run-nox               run vm without opening a graphical window
+    -n, --nox                   run vm without opening a graphical window
                                 which is useful for background jobs like SSH
-    --run-nox-orig              '--run-orig' and '--run-nox' combined
     -s, --mkdir-shared          create shared directory
     -r, --remote                connect to a vnc instance via ssh
     -x, --run                   run vm
-    --run-vnc                   run vm with vnc
-    --run-orig                  run from original vhd
-    --run-orig-vnc              run from original vhd with vnc
+    --vnc                       run vm with vnc
+    --orig                      run from original vhd
 
 Exit status:
  0  if OK,
@@ -81,9 +76,9 @@ main()
     declare -a argc=("${!1}")
 
     # Set the options.
-    local getopt_short_options='abcdhinrx'
+    local getopt_short_options='abcdhimnrvx'
     local getopt_long_options='attach,backup,create,delete,help,install,run,\
-remote,install,vnc,nox'
+remote,vnc,mkdir-shared,nox'
 
     # Set the default values for the flags.
     local attach='false'
@@ -91,10 +86,10 @@ remote,install,vnc,nox'
     local delete='false'
     local install='false'
     local nox='false'
-    local orig='false'
-    local remotely=''
+    local origin='false'
+    local remote=''
     local run='false'
-    local shared='false'
+    local mkdir_shared='false'
     local vnc='false'
 
     local program_name="${0}"
@@ -159,6 +154,15 @@ remote,install,vnc,nox'
         && show_flags \
             'attach' \
             'backup' \
+            'create' \
+            'delete' \
+            'help' \
+            'install' \
+            'mkdir_shared' \
+            'nox' \
+            'run' \
+            'remote' \
+            'vnc' \
         && return 0
     [ "${help}" = 'true' ] && show_help && return 0
     # Override values of optional parameters.
@@ -166,8 +170,14 @@ remote,install,vnc,nox'
 
     # From now on you should call a function or an external program
     # using the values of the flag variables.
-    local display='gtk'
-    [ "${attach}" = 'true' ] && { attach "${remote}"; return ${?}; }
+    local place=''
+    local display=''
+
+    if [ "${attach}" = 'true' ]; then
+        [ "${remote}" = 'true' ] && place='remote' || place=''
+        [ "${vnc}" = 'true' ] && display='vnc' || display=''
+        { attach "${place}" "${display}"; return ${?}; }
+    fi
     [ "${backup}" = 'true' ] && { backup; return ${?}; }
     [ "${create}" = 'true' ] && { create; return ${?}; }
     [ "${delete}" = 'true' ] && { delete "${origin}"; return ${?}; }
@@ -175,8 +185,10 @@ remote,install,vnc,nox'
     if [ "${run}" = 'true' ]; then
         [ "${vnc}" = 'vnc' ] && display='vnc'
         [ "${nox}" = 'nox' ] && display='none'
+        [ -z "${display}" ] && display='gtk'
         { run "${display}" "${origin}"; return ${?}; }
-    [ "${shared}" = 'true' ] && { shared; return ${?}; }
+    fi
+    [ "${mkdir_shared}" = 'true' ] && { shared; return ${?}; }
 }
 
 # Test dependencies and versions.
