@@ -111,21 +111,13 @@ hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
         -drive file="${vhd}" &
 }
 
-#    -d, --default           start the vm in headless mode and connect to it
-#                            with SSH
-#    -h, --help              print this help
-#    -u, --use-vnc           start the vm in VNC mode and connect to it with the
-#                            VNC client
-#
-# FIXME
-#
 # Start and connect to a remote QVM instance hosted on a different machine.
 run_remote_instance()
 {
     local display="${1}"
 
     if [ -z "$(ssh -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" "pgrep qemu")" ]; then
-        if [ "${display}" = "use_vnc" ]; then
+        if [ "${display}" = 'vnc' ]; then
             ssh -p ${SSH_EXPOSED_PORT} -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" \
                 "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm --run-vnc" &
         else
@@ -135,10 +127,10 @@ run_remote_instance()
         sleep ${SECONDS_BEFORE_CONNECTION_ATTEMPT}
     fi
 
-    if [ "${display}" = "vnc" ]; then
-        "${local_path}"/qvm --remote &
+    if [ "${display}" = 'vnc' ]; then
+        "${local_path}"/qvm --attach --remote --vnc &
     else
-        "${local_path}"/qvm --attach-remote
+        "${local_path}"/qvm --attach --remote
     fi
 }
 

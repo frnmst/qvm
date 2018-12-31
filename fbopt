@@ -87,7 +87,7 @@ remote,vnc,mkdir-shared,nox,print-flags'
     local install='false'
     local nox='false'
     local origin='false'
-    local remote=''
+    local remote='false'
     local run='false'
     local mkdir_shared='false'
     local vnc='false'
@@ -178,8 +178,8 @@ remote,vnc,mkdir-shared,nox,print-flags'
 
     check_dependencies || exit ${?}
     if [ "${attach}" = 'true' ]; then
-        [ "${remote}" = 'true' ] && place='remote' || place='local'
-        [ "${vnc}" = 'true' ] && display='vnc' || display=''
+        [ "${remote}" = 'remote' ] && place='remote' || place='local'
+        [ "${vnc}" = 'vnc' ] && display='vnc' || display=''
         { attach "${place}" "${display}"; return ${?}; }
     fi
     [ "${backup}" = 'true' ] && { backup; return ${?}; }
@@ -187,10 +187,16 @@ remote,vnc,mkdir-shared,nox,print-flags'
     [ "${delete}" = 'true' ] && { delete "${origin}"; return ${?}; }
     [ "${install}" = 'true' ] && { installs "${vnc}"; return ${?}; }
     if [ "${run}" = 'true' ]; then
-        [ "${vnc}" = 'vnc' ] && display='vnc'
-        [ "${nox}" = 'nox' ] && display='none'
-        [ -z "${display}" ] && display='gtk'
-        { run "${display}" "${origin}"; return ${?}; }
+        if [ "${remote}" = 'remote' ]; then
+            # Start remote instance.
+            [ "${vnc}" = 'vnc' ] && display='vnc'
+            { run_remote_instance "${display}"; return ${?}; }
+        else
+            [ "${vnc}" = 'vnc' ] && display='vnc'
+            [ "${nox}" = 'nox' ] && display='none'
+            [ -z "${display}" ] && display='gtk'
+            { run "${display}" "${origin}"; return ${?}; }
+        fi
     fi
     [ "${mkdir_shared}" = 'true' ] && { mkdir_shared; return ${?}; }
 }
