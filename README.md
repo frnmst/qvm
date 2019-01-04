@@ -118,20 +118,24 @@ Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
 # FIXME 
 
 To automatically start the virtual machine from a non-host computer you can
-use the `automatic_remote_startup.sh` script. Make sure that both the local 
-non-host and the remote host computer have a copy of the QVM repository with 
+use the `--remote` option. Make sure that both the local 
+(non-host) and the remote host computer have a copy of the QVM repository with 
 the variables correctly set in the `configrc` file.
 
 This script will start the virtual machine if on the host computer no other
 virtual machine is running. You can use either the VNC or the headless 
 connection. Both of them require that SSH is configured correctly on the  
 computers: the host must be reachable from the client via SSH.
-This can be verified by using the `--attach-remote` option.
+This can be verified by using the `--attach --remote` options.
 
 Once you have checked that everyting works, you can add a command alias in 
 your shell configuration file (e.g: `~/.bashrc`), something like:
 
-    alias vm='/home/user/scripts/qvm/automatic_remote_startup.sh'
+    alias vm='/home/user/scripts/qvm/qvm --run --remote --vnc'
+
+or, if you are not interested in Xorg:
+
+    alias vm='/home/user/scripts/qvm/qvm --run --remote'
 
 ## Interesting applications
 

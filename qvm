@@ -127,11 +127,7 @@ run_remote_instance()
         sleep ${SECONDS_BEFORE_CONNECTION_ATTEMPT}
     fi
 
-    if [ "${display}" = 'vnc' ]; then
-        "${local_path}"/qvm --attach --remote --vnc &
-    else
-        "${local_path}"/qvm --attach --remote
-    fi
+    attach 'remote' "${display}"
 }
 
 program_name="${0}"

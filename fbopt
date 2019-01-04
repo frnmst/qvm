@@ -26,20 +26,19 @@ Only a single option is accepted.
 By default, the backup vhd is run.
 Mandatory arguments to long options are mandatory for short options too.
 Options:
-    -a, --attach                connect to SSH locally
-    -b, --backup                backup vhd
-    -c, --create                create new vhd
-    -d, --delete                delete vhd backup
+    -a, --attach                connect via SSH
+    -b, --backup                backup the vhd
+    -c, --create                create a new vhd
+    -d, --delete                delete the vhd backup
     -h, --help                  print this help
-    -i, --install               install img on vhd
-    -m, --mkdir-shared          create shared directory
-    -n, --nox                   run vm without opening a graphical window
-                                which is useful for background jobs like SSH
+    -i, --install               install the image on a vhd
+    -m, --mkdir-shared          create a shared directory
+    -n, --nox                   run vm without graphical output
     -o, --orig                  run from the original vhd
-    -r, --remote                connect to a vnc instance via ssh
-    -v, --vnc                   run vm with vnc
+    -r, --remote                connect to a remote instance of QVM
+    -v, --vnc                   use VNC
     -V, --version               print the software version
-    -x, --run                   run vm
+    -x, --run                   run the vm
 
 Exit status:
  0  if OK,
