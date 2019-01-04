@@ -37,6 +37,27 @@ It can handle:
     - If you need to use the vm remotely from a coumputer which does not 
       support virtualization.
 
+### Actions and parameters
+
+You can make some combinations between actions and parameters.
+
+#### Actions
+
+- attach
+- backup
+- create
+- delete
+- install
+- mkdir-shared
+- run
+
+#### Parameters
+
+- nox
+- origin
+- remote
+- vnc
+
 ### Setup
 
 - Create a new virtual hard disk and complete the OS installation which 

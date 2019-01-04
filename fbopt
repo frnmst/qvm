@@ -32,13 +32,14 @@ Options:
     -d, --delete                delete vhd backup
     -h, --help                  print this help
     -i, --install               install img on vhd
+    -m, --mkdir-shared          create shared directory
     -n, --nox                   run vm without opening a graphical window
                                 which is useful for background jobs like SSH
     -o, --orig                  run from the original vhd
-    -s, --mkdir-shared          create shared directory
     -r, --remote                connect to a vnc instance via ssh
+    -v, --vnc                   run vm with vnc
+    -V, --version               print the software version
     -x, --run                   run vm
-    -v, --vnc                       run vm with vnc
 
 Exit status:
  0  if OK,
@@ -47,6 +48,16 @@ Exit status:
 CC0 License
 Written in 2016-2018 by Franco Masotti/frnmst <franco.masotti@live.com>
 EOF
+}
+
+# TODO better FIXME.
+show_version()
+{
+    local program_name="${0}"
+    local program_version="$(cat version)"
+
+    wd="$(pwd)"
+    printf "%s\n" "${program_name} version ${program_version}"
 }
 
 # A function that prints the variable name and value of all
@@ -76,13 +87,14 @@ main()
     declare -a argc=("${!1}")
 
     # Set the options.
-    local getopt_short_options='abcdhimnorvx'
+    local getopt_short_options='abcdhimnorvVx'
     local getopt_long_options='attach,backup,create,delete,help,install,run,\
-remote,vnc,mkdir-shared,nox,print-flags'
+remote,vnc,mkdir-shared,nox,print-flags,version'
 
     # Set the default values for the flags.
     local attach='false'
     local backup='false'
+    local create='false'
     local delete='false'
     local install='false'
     local nox='false'
@@ -90,6 +102,7 @@ remote,vnc,mkdir-shared,nox,print-flags'
     local remote='false'
     local run='false'
     local mkdir_shared='false'
+    local version='false'
     local vnc='false'
 
     local program_name="${0}"
@@ -135,6 +148,8 @@ remote,vnc,mkdir-shared,nox,print-flags'
 
             -v | --vnc )                vnc='vnc'           ;;
 
+            -V | --version )            version='true'      ;;
+
             -x | --run )                run='true'          ;;
 
         esac
@@ -165,9 +180,11 @@ remote,vnc,mkdir-shared,nox,print-flags'
             'origin' \
             'run' \
             'remote' \
+            'version' \
             'vnc' \
         && return 0
     [ "${help}" = 'true' ] && show_help && return 0
+    [ "${version}" = 'true' ] && show_version && return 0
     # Override values of optional parameters.
     # NOOP.
 
@@ -177,6 +194,12 @@ remote,vnc,mkdir-shared,nox,print-flags'
     local display=''
 
     check_dependencies || exit ${?}
+    { [ "${attach}" = 'false' ] && [ "${backup}" = 'false' ] \
+        && [ "${create}" = 'false' ] && [ "${delete}" = 'false' ] \
+        && [ "${install}" = 'false' ] && [ "${run}" = 'false' ]; } \
+        && printf "%s\n" 'an action needs to be specified' 1>&2 2>&- \
+        && return 1
+
     if [ "${attach}" = 'true' ]; then
         [ "${remote}" = 'remote' ] && place='remote' || place='local'
         [ "${vnc}" = 'vnc' ] && display='vnc' || display=''
