@@ -104,7 +104,7 @@ run()
 hostfwd=tcp::"${HOST_PORT_1}"-:"${GUEST_PORT_1}",\
 hostfwd=tcp::"${HOST_PORT_2}"-:"${GUEST_PORT_2}",\
 hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
-        -virtfs local,path="$SHARED_DATA_PATH",security_model=none,mount_tag="${MOUNT_TAG}" \
+        -virtfs local,path="${SHARED_DATA_PATH}",security_model=none,mount_tag="${MOUNT_TAG}" \
         -smp ${NUMBER_OF_CORES} \
         -soundhw ac97 \
         -display "${display}" \
@@ -119,10 +119,10 @@ run_remote_instance()
     if [ -z "$(ssh -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" "pgrep qemu")" ]; then
         if [ "${display}" = 'vnc' ]; then
             ssh -p ${SSH_EXPOSED_PORT} -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" \
-                "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm --run-vnc" &
+                "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm --run --vnc" &
         else
             ssh -p ${SSH_EXPOSED_PORT} -l "${HOST_USERNAME}" "${HOST_IP_ADDRESS}" \
-                "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm -n" &
+                "cd "${HOST_QVM_SCRIPT_DIRECTORY}" && ./qvm --run --nox" &
         fi
         sleep ${SECONDS_BEFORE_CONNECTION_ATTEMPT}
     fi

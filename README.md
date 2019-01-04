@@ -159,12 +159,6 @@ network filesystems.
 
 ## Help
 
-### qvm
-
-FIXME
-
-### automatic_remote_startup.sh
-
 FIXME
 
 ## License
