@@ -101,6 +101,12 @@ You must then run QVM with one of the VNC options on the server side.
 On the client side you must simply edit the `HOST_IP_ADDRESS` and 
 `HOST_USERNAME` variables in the configuration file.
 
+For this to work, you must enable the following lines in the SSH daemon
+configuration of the host computer:
+
+    AllowTcpForwarding yes
+    AllowAgentForwarding yes
+
 For example, on the server side you could install the virtual machine remotely 
 like this:
 

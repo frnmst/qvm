@@ -28,7 +28,8 @@ attach()
     local address=''
 
     [ "${place}" = 'remote' ] && address="${HOST_IP_ADDRESS}" || address='127.0.0.1'
-    [ -n "${place}" ] && ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
+    # FIXME:::
+#    [ -n "${place}" ] && ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
     if [ "${display}" = 'vnc' ]; then
         ssh -N -f -L 5901:127.0.0.1:5900 -l "${HOST_USERNAME}" "${address}"
         vncviewer 127.0.0.1:1
@@ -83,7 +84,6 @@ run()
     local display="${1}"
     local vhd_type="${2}"
     local vhd=''
-    local display=''
     local enable_vnc=''
 
     [ "${display}" = 'vnc' ]  \
