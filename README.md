@@ -39,7 +39,8 @@ It can handle:
 
 ### Actions and parameters
 
-You can make some combinations between actions and parameters.
+You can make some combinations between actions and places. Both of these 
+elements are parameters.
 
 #### Actions
 
@@ -51,7 +52,7 @@ You can make some combinations between actions and parameters.
 - mkdir-shared
 - run
 
-#### Parameters
+#### Places
 
 - nox
 - origin
@@ -97,8 +98,8 @@ processor does not support virtualization. The only thing to do is to make
 the server's port (`5900`) reachable from the clients.
 
 You must then run QVM with one of the VNC options on the server side.
-On the client side you must simply edit the `host_ip_address` and 
-`host_username` variables in the configuration file.
+On the client side you must simply edit the `HOST_IP_ADDRESS` and 
+`HOST_USERNAME` variables in the configuration file.
 
 For example, on the server side you could install the virtual machine remotely 
 like this:
@@ -123,17 +124,18 @@ use the `--remote` option. Make sure that both the local
 the variables correctly set in the `configrc` file.
 
 This script will start the virtual machine if on the host computer no other
-virtual machine is running. You can use either the VNC or the headless 
+virtual machine is running. You can use either a VNC or headless 
 connection. Both of them require that SSH is configured correctly on the  
-computers: the host must be reachable from the client via SSH.
-This can be verified by using the `--attach --remote` options.
+computers, i.e. the host must be reachable from the client via SSH.
+This can be verified by using the `--attach --remote` options while the
+virtual machine is already running.
 
 Once you have checked that everyting works, you can add a command alias in 
 your shell configuration file (e.g: `~/.bashrc`), something like:
 
     alias vm='/home/user/scripts/qvm/qvm --run --remote --vnc'
 
-or, if you are not interested in Xorg:
+or, if you don't need VNC:
 
     alias vm='/home/user/scripts/qvm/qvm --run --remote'
 
