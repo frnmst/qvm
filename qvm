@@ -98,7 +98,7 @@ run()
 
     # No spaces between the parameters of each option.
     qemu-system-x86_64 \
-        -m "${VM_MEMORY}" \
+        -m "${MEMORY}" \
         -enable-kvm \
         ${enable_vnc} \
         -device e1000,netdev=user.0 \
