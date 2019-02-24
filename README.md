@@ -52,7 +52,7 @@ It can handle:
 
 ## Version
 
-0.0.1
+0.0.2
 
 See all [qvm releases](https://github.com/frnmst/qvm/releases).
 
