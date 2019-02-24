@@ -14,11 +14,10 @@
 
 check_dependencies()
 {
-    which \
-        qemu-system-x86_64 \
-        qemu-img \
-        ssh \
-        vncviewer
+    command -V qemu-system-x86_64 \
+        && command -V qemu-img \
+        && command -V ssh \
+        && command -V vncviewer
 }
 
 attach()

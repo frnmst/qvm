@@ -17,25 +17,39 @@ It can handle:
 - Shared directory between host and guest.
 - Running the virtual machine with a combination of the previous options.
 
-## Setup information and usage
+## Prerequisites
 
-### Prerequisites
-
-- You need a 64 bit machine with virtualization technology and more than 4 GB 
+- You need a 64 bit machine with virtualization technology and at least 4 GB 
   of RAM.
 - Modify `configvmrc` based on your needs.
   Variables are self-explanatory and I have kept mine 
   as an example.
-- Install the following dependencies
-  - [GNU Bash](http://www.gnu.org/software/bash/bash.html)
-    - Scipting language interpreter
-  - [GNU Core Utilities](https://www.gnu.org/software/coreutils/)
-    - Basic software like `ls`, `cat`, etc...
-  - [QEMU](https://www.qemu.org/)
-    - The machine emulator
-  - [TigerVNC](http://www.tigervnc.org)
-    - If you need to use the vm remotely from a coumputer which does not 
-      support virtualization.
+
+## Version
+
+0.0.1
+
+See all [qvm releases](https://github.com/frnmst/qvm/releases).
+
+## Dependencies
+
+You need to install the following packages and the ones listed for
+[fbopt](https://github.com/frnmst/fbopt#dependencies)
+
+| Package | Executable | Version command | Package version |
+|---------|------------|-----------------|-----------------|
+| [QEMU](https://www.qemu.org/) | `/bin/qemu-system-x86_64` | `$ qemu-system-x86_64 --version` | `QEMU emulator version 3.1.0` |
+| [TigerVNC](http://www.tigervnc.org) | `/bin/vncviewer` | `$ vncviewer --help` | `TigerVNC Viewer 64-bit v1.9.0` |
+| [OpenSSH](https://www.openssh.com/portable.html) | `/bin/ssh` | `$ ssh -V` | `OpenSSH_7.9p1, OpenSSL 1.1.1a  20 Nov 2018`
+| [GNU coreutils](https://www.gnu.org/software/coreutils/) | `/bin/mkdir`, `/bin/sleep, `/bin/rm` | `$ ${Executable} --version` | `(GNU coreutils) 8.30` |
+
+## Installation
+
+### Arch Linux based distros
+
+    # pacman -S coreutils openssh tigervnc qemu
+
+## Setup information and usage
 
 ### Actions and parameters
 
@@ -61,24 +75,24 @@ elements are parameters.
 
 ### Setup
 
-- Create a new virtual hard disk and complete the OS installation which 
-  can also be done via SSH.
+1. Create a new virtual hard disk and complete the OS installation which 
+   can also be done via SSH.
 
-        $ ./qvm --create && ./qvm --install
+         $ ./qvm --create && ./qvm --install
 
-- Optionally enable the SSH daemon on the guest machine.
-- Optionally create a new backup VHD:
+2. Optionally enable the SSH daemon on the guest machine.
+3. Optionally create a new backup VHD:
 
-        $ ./qvm --backup
+         $ ./qvm --backup
 
-- Now you can run the virtual machine either using the original or the backup 
-  virtual hard disk. If you run `./qvm -x` the virtual machine will run in 
-  graphics mode using the backup hard disk.
-- Optionally add the following in the guest machine fstab file (`/etc/fstab`), 
-  to enable the shared directory automatically. This avoids entering mount 
-  commands by hand.
+4. Now you can run the virtual machine either using the original or the backup 
+   virtual hard disk. If you run `./qvm -x` the virtual machine will run in 
+   graphics mode using the backup hard disk.
+5. Optionally add the following in the guest machine fstab file (`/etc/fstab`), 
+   to enable the shared directory automatically. This avoids entering mount 
+   commands by hand.
 
-        host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
+         host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
 
 ## Connection to the machine
 
