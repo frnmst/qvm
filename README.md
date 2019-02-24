@@ -6,6 +6,31 @@ Trivial management of 64 bit virtual machines with qemu.
 
 [](TOC)
 
+- [qvm](#qvm)
+    - [Table of contents](#table-of-contents)
+    - [What this script will do](#what-this-script-will-do)
+    - [Prerequisites](#prerequisites)
+    - [Version](#version)
+    - [Dependencies](#dependencies)
+    - [Installation](#installation)
+        - [Arch Linux based distros](#arch-linux-based-distros)
+    - [Help](#help)
+    - [Setup information and usage](#setup-information-and-usage)
+        - [Actions and parameters](#actions-and-parameters)
+            - [Actions](#actions)
+            - [Places](#places)
+        - [Setup](#setup)
+    - [Connection to the machine](#connection-to-the-machine)
+    - [VNC options](#vnc-options)
+        - [Setup](#setup-1)
+        - [Examples](#examples)
+    - [Automatic remote startup](#automatic-remote-startup)
+    - [Interesting applications](#interesting-applications)
+        - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
+    - [License](#license)
+
+[](TOC)
+
 ## What this script will do
 
 It can handle:
@@ -49,6 +74,10 @@ You need to install the following packages and the ones listed for
 
     # pacman -S coreutils openssh tigervnc qemu
 
+## Help
+
+FIXME
+
 ## Setup information and usage
 
 ### Actions and parameters
@@ -86,7 +115,7 @@ elements are parameters.
          $ ./qvm --backup
 
 4. Now you can run the virtual machine either using the original or the backup 
-   virtual hard disk. If you run `./qvm -x` the virtual machine will run in 
+   virtual hard disk. If you run `./qvm --run` the virtual machine will run in 
    graphics mode using the backup hard disk.
 5. Optionally add the following in the guest machine fstab file (`/etc/fstab`), 
    to enable the shared directory automatically. This avoids entering mount 
@@ -112,13 +141,11 @@ does not support virtualization.
 
 ### Setup
 
-For this to work, you must enable the following lines in the SSH daemon
+For this to work, you must add the following lines in the SSH daemon
 configuration of the host computer:
 
     AllowTcpForwarding yes
     AllowAgentForwarding yes
-
-
 
 ### Examples
 
@@ -126,22 +153,19 @@ You must run QVM with one of the VNC options on the server side.
 On the client side you must simply edit the `HOST_IP_ADDRESS` and 
 `HOST_USERNAME` variables in the configuration file.
 
-For example, on the server side you could install the virtual machine remotely 
-like this:
+To intall a virtual machine remotely, on the server side you must run:
 
     $ ./qvm --install --vnc
 
-And on the client side:
+and on the client side:
 
     $ ./qvm --attach --remote --vnc
 
 At this point you should see your virtual machine running in a TigerVNC window.
 
-Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.
+*Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.*
 
 ## Automatic remote startup
-
-# FIXME 
 
 To automatically start the virtual machine from a non-host computer you can
 use the `--remote` option. Make sure that both the local 
@@ -160,7 +184,7 @@ your shell configuration file (e.g: `~/.bashrc`), something like:
 
     alias vm='/home/user/scripts/qvm/qvm --run --remote --vnc'
 
-or, if you don't need VNC:
+because `--remote` implies `--nox` by default. If you don't need VNC:
 
     alias vm='/home/user/scripts/qvm/qvm --run --remote'
 
@@ -183,10 +207,6 @@ package (if it's not already present in the QEMU package itself).
 
 You should consult the QEMU's manual to learn about all possible compatible 
 network filesystems.
-
-## Help
-
-FIXME
 
 ## License
 
