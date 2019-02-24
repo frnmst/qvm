@@ -41,7 +41,7 @@ You need to install the following packages and the ones listed for
 | [QEMU](https://www.qemu.org/) | `/bin/qemu-system-x86_64` | `$ qemu-system-x86_64 --version` | `QEMU emulator version 3.1.0` |
 | [TigerVNC](http://www.tigervnc.org) | `/bin/vncviewer` | `$ vncviewer --help` | `TigerVNC Viewer 64-bit v1.9.0` |
 | [OpenSSH](https://www.openssh.com/portable.html) | `/bin/ssh` | `$ ssh -V` | `OpenSSH_7.9p1, OpenSSL 1.1.1a  20 Nov 2018`
-| [GNU coreutils](https://www.gnu.org/software/coreutils/) | `/bin/mkdir`, `/bin/sleep, `/bin/rm` | `$ ${Executable} --version` | `(GNU coreutils) 8.30` |
+| [GNU coreutils](https://www.gnu.org/software/coreutils/) | `/bin/mkdir`, `/bin/sleep`, `/bin/rm` | `$ ${Executable} --version` | `(GNU coreutils) 8.30` |
 
 ## Installation
 
