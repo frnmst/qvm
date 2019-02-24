@@ -8,9 +8,10 @@ Trivial management of 64 bit virtual machines with qemu.
 
 - [qvm](#qvm)
     - [Table of contents](#table-of-contents)
+    - [Reasons](#reasons)
+    - [Version](#version)
     - [What this script will do](#what-this-script-will-do)
     - [Prerequisites](#prerequisites)
-    - [Version](#version)
     - [Dependencies](#dependencies)
     - [Installation](#installation)
         - [Arch Linux based distros](#arch-linux-based-distros)

@@ -27,8 +27,7 @@ attach()
     local address=''
 
     [ "${place}" = 'remote' ] && address="${HOST_IP_ADDRESS}" || address='127.0.0.1'
-    # FIXME:::
-#    [ -n "${place}" ] && ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
+    [ -n "${place}" ] && [ "${display}" != 'vnc' ] && ssh -p "${SSH_HOST_PORT}" -l "${SSH_GUEST_USERNAME}" "${address}"
     if [ "${display}" = 'vnc' ]; then
         # Forward "${address}":5900 to localhost:5901 through SSH.
         ssh -N -f -L 5901:127.0.0.1:5900 -l "${HOST_USERNAME}" "${address}"
