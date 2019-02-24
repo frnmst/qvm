@@ -31,6 +31,16 @@ Trivial management of 64 bit virtual machines with qemu.
 
 [](TOC)
 
+## Reasons
+
+See https://frnmst.gitlab.io/notes/qemu-ssh-tunnel.html
+
+## Version
+
+1.0.0
+
+See all [qvm releases](https://github.com/frnmst/qvm/releases).
+
 ## What this script will do
 
 It can handle:
@@ -49,12 +59,6 @@ It can handle:
 - Modify `configvmrc` based on your needs.
   Variables are self-explanatory and I have kept mine 
   as an example.
-
-## Version
-
-1.0.0
-
-See all [qvm releases](https://github.com/frnmst/qvm/releases).
 
 ## Dependencies
 
