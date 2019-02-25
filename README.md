@@ -172,6 +172,8 @@ The VNC options in this script allow you to connect to a remote instance of
 QEMU. This is particularly useful if, for example, your local machine 
 does not support virtualization.
 
+*Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.*
+
 ### Setup
 
 For this to work, you must add the following lines in the SSH daemon
@@ -188,15 +190,13 @@ On the client side you must simply edit the `HOST_IP_ADDRESS` and
 
 To intall a virtual machine remotely, on the server side you must run:
 
-    $ ./qvm --install --vnc
+    $ ./qvm --create && ./qvm --install --vnc
 
 and on the client side:
 
     $ ./qvm --attach --remote --vnc
 
 At this point you should see your virtual machine running in a TigerVNC window.
-
-*Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.*
 
 ## Automatic remote startup
 
