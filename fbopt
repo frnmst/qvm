@@ -37,7 +37,6 @@ Options:
     -o, --orig                  run from the original vhd
     -r, --remote                connect to a remote instance of QVM
     -v, --vnc                   use VNC
-    -V, --version               print the software version
     -x, --run                   run the vm
 
 Exit status:
@@ -47,16 +46,6 @@ Exit status:
 CC0 License
 Written in 2018 by Franco Masotti/frnmst <franco.masotti@live.com>
 EOF
-}
-
-# TODO better FIXME.
-show_version()
-{
-    local program_name="${0}"
-    local program_version="$(cat version)"
-
-    wd="$(pwd)"
-    printf "%s\n" "${program_name} version ${program_version}"
 }
 
 # A function that prints the variable name and value of all
@@ -147,8 +136,6 @@ remote,vnc,mkdir-shared,nox,print-flags,version'
 
             -v | --vnc )                vnc='vnc'           ;;
 
-            -V | --version )            version='true'      ;;
-
             -x | --run )                run='true'          ;;
 
         esac
@@ -183,7 +170,6 @@ remote,vnc,mkdir-shared,nox,print-flags,version'
             'vnc' \
         && return 0
     [ "${help}" = 'true' ] && show_help && return 0
-    [ "${version}" = 'true' ] && show_version && return 0
     # Override values of optional parameters.
     # NOOP.
 

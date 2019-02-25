@@ -81,7 +81,34 @@ You need to install the following packages and the ones listed for
 
 ## Help
 
-FIXME
+```
+Usage: qvm [OPTION]
+Trivial management of 64 bit virtual machines with qemu.
+
+Only a single option is accepted.
+By default, the backup vhd is run.
+Mandatory arguments to long options are mandatory for short options too.
+Options:
+    -a, --attach                connect via SSH
+    -b, --backup                backup the vhd
+    -c, --create                create a new vhd
+    -d, --delete                delete the vhd backup
+    -h, --help                  print this help
+    -i, --install               install the image on a vhd
+    -m, --mkdir-shared          create a shared directory
+    -n, --nox                   run vm without graphical output
+    -o, --orig                  run from the original vhd
+    -r, --remote                connect to a remote instance of QVM
+    -v, --vnc                   use VNC
+    -x, --run                   run the vm
+
+Exit status:
+ 0  if OK,
+ 1  if an error occurred.
+
+CC0 License
+Written in 2018 by Franco Masotti/frnmst <franco.masotti@live.com>
+```
 
 ## Setup information and usage
 
