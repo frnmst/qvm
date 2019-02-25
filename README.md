@@ -28,6 +28,7 @@ Trivial management of 64 bit virtual machines with qemu.
     - [Automatic remote startup](#automatic-remote-startup)
     - [Interesting applications](#interesting-applications)
         - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
+    - [Bugs](#bugs)
     - [License](#license)
 
 [](TOC)
@@ -239,6 +240,14 @@ package (if it's not already present in the QEMU package itself).
 
 You should consult the QEMU's manual to learn about all possible compatible 
 network filesystems.
+
+## Bugs
+
+- If you want to use `--remote` and `--vnc` combined, you must first 
+  disable any `ControlMaster` and `ControlPath` options associated to the user 
+  and host in control of the virtual machine.
+  These options can be found in the client's SSH configuration file which is 
+  usually `~/.ssh/config`.
 
 ## License
 
