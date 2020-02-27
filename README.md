@@ -156,6 +156,17 @@ elements are parameters.
 
          host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
 
+    Note: to be able to access the shared directory the user and group ids must 
+    be the same for the host and guest machines. If needed, change those ids within
+    the guest machine:
+
+      1. connect via VNC
+      2. login as root
+      3. run: ``# usermod -u ${new_user_id} "${user_name}" && groupmod -g ${new_group_id}`` "{group_name}"``
+      4. run: ``# chown -R "${user_name}":"{group_name}" /home/"${user_name}"
+      5. reboot
+
+
 ## Connection to the machine
 
 - You can also access the virtual machine through SSH:
