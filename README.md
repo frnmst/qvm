@@ -39,8 +39,6 @@ See https://frnmst.gitlab.io/notes/qemu-ssh-tunnel.html
 
 ## Version
 
-1.0.0
-
 See all [qvm releases](https://github.com/frnmst/qvm/releases).
 
 ## What this script will do
@@ -69,7 +67,7 @@ You need to install the following packages and the ones listed for
 
 | Package | Executable | Version command | Package version |
 |---------|------------|-----------------|-----------------|
-| [GNU Bash](https://www.gnu.org/software/coreutils/) | `/bin/bash` | `$ bash --version` | `GNU bash, version 5.0.16(1)-release` |
+| [GNU Bash](https://www.gnu.org/software/bash/bash.html) | `/bin/bash` | `$ bash --version` | `GNU bash, version 5.0.16(1)-release` |
 | [QEMU](https://www.qemu.org/) | `/bin/qemu-system-x86_64` | `$ qemu-system-x86_64 --version` | `QEMU emulator version 3.1.0` |
 | [TigerVNC](http://www.tigervnc.org) | `/bin/vncviewer` | `$ vncviewer --help` | `TigerVNC Viewer 64-bit v1.9.0` |
 | [OpenSSH](https://www.openssh.com/portable.html) | `/bin/ssh` | `$ ssh -V` | `OpenSSH_7.9p1, OpenSSL 1.1.1a  20 Nov 2018`
