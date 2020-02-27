@@ -162,8 +162,8 @@ elements are parameters.
 
       1. connect via VNC
       2. login as root
-      3. run: ``# usermod -u ${new_user_id} "${user_name}" && groupmod -g ${new_group_id}`` "{group_name}"``
-      4. run: ``# chown -R "${user_name}":"{group_name}" /home/"${user_name}"
+      3. run: ``# usermod -u ${new_user_id} "${user_name}" && groupmod -g ${new_group_id} "{group_name}"``
+      4. run: ``# chown -R "${user_name}":"{group_name}" /home/"${user_name}"``
       5. reboot
 
 
