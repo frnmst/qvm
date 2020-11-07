@@ -207,6 +207,15 @@ and on the client side:
     $ ./qvm --attach --remote --vnc
 
 At this point you should see your virtual machine running in a TigerVNC window.
+Once the installation is complete you can poweroff the machine and then run:
+
+    $ ./qvm --run --vnc
+
+on the server, and
+
+    $ ./qvm --attach --remote --vn
+
+on the client.
 
 ## Automatic remote startup
 

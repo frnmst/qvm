@@ -97,6 +97,7 @@ run()
     # No spaces between the parameters of each option.
     qemu-system-x86_64 \
         -m "${MEMORY}" \
+        -cpu host \
         -enable-kvm \
         ${enable_vnc} \
         -device e1000,netdev=user.0 \
@@ -106,7 +107,7 @@ hostfwd=tcp::"${HOST_PORT_2}"-:"${GUEST_PORT_2}",\
 hostfwd=tcp::"${SSH_HOST_PORT}"-:"${SSH_GUEST_PORT}" \
         -virtfs local,path="${SHARED_DATA_PATH}",security_model=passthrough,mount_tag="${MOUNT_TAG}" \
         -smp ${NUMBER_OF_CORES} \
-        -soundhw ac97 \
+        -device AC97 \
         -display "${display}" \
         -drive file="${vhd}" &
 }
