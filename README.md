@@ -4,34 +4,36 @@ Trivial management of 64 bit virtual machines with qemu.
 
 ## Table of contents
 
-[](TOC)
+<!--TOC-->
 
 - [qvm](#qvm)
-    - [Table of contents](#table-of-contents)
-    - [Reasons](#reasons)
-    - [Version](#version)
-    - [What this script will do](#what-this-script-will-do)
-    - [Prerequisites](#prerequisites)
-    - [Dependencies](#dependencies)
-    - [Installation](#installation)
-        - [Arch Linux based distros](#arch-linux-based-distros)
-    - [Help](#help)
-    - [Setup information and usage](#setup-information-and-usage)
-        - [Actions and parameters](#actions-and-parameters)
-            - [Actions](#actions)
-            - [Places](#places)
-        - [Setup](#setup)
-    - [Connection to the machine](#connection-to-the-machine)
-    - [VNC options](#vnc-options)
-        - [Setup](#setup-1)
-        - [Examples](#examples)
-    - [Automatic remote startup](#automatic-remote-startup)
-    - [Interesting applications](#interesting-applications)
-        - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
-    - [Bugs](#bugs)
-    - [License](#license)
+  - [Table of contents](#table-of-contents)
+  - [Reasons](#reasons)
+  - [Version](#version)
+  - [What this script will do](#what-this-script-will-do)
+  - [Prerequisites](#prerequisites)
+  - [Dependencies](#dependencies)
+  - [Installation](#installation)
+    - [Arch Linux based distros](#arch-linux-based-distros)
+  - [Help](#help)
+  - [Setup information and usage](#setup-information-and-usage)
+    - [Actions and parameters](#actions-and-parameters)
+      - [Actions](#actions)
+      - [Places](#places)
+    - [Setup](#setup)
+  - [Connection to the machine](#connection-to-the-machine)
+  - [VNC options](#vnc-options)
+    - [Setup](#setup-1)
+    - [Examples](#examples)
+      - [Installation](#installation-1)
+      - [Maintenance](#maintenance)
+  - [Automatic remote startup](#automatic-remote-startup)
+  - [Interesting applications](#interesting-applications)
+    - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
+  - [Bugs](#bugs)
+  - [License](#license)
 
-[](TOC)
+<!--TOC-->
 
 ## Reasons
 
@@ -198,6 +200,8 @@ You must run QVM with one of the VNC options on the server side.
 On the client side you must simply edit the `HOST_IP_ADDRESS` and 
 `HOST_USERNAME` variables in the configuration file.
 
+#### Installation
+
 To intall a virtual machine remotely, on the server side you must run:
 
     $ ./qvm --create && ./qvm --install --vnc
@@ -213,9 +217,16 @@ Once the installation is complete you can poweroff the machine and then run:
 
 on the server, and
 
-    $ ./qvm --attach --remote --vn
+    $ ./qvm --attach --remote --vnc
 
 on the client.
+
+#### Maintenance
+
+You can use the installation method for maintenance as well, for example if the
+machine is unbootable. Select the appropriate virtual hard disk for the 
+`VHD_NAME` variable in the configuration file and continue with
+the installation instructions. You should find the hard disk (usually `/dev/sda`).
 
 ## Automatic remote startup
 
