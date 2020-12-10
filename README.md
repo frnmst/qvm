@@ -32,6 +32,7 @@ Trivial management of 64 bit virtual machines with qemu.
     - [Virtual machine hard disk over a network protocol](#virtual-machine-hard-disk-over-a-network-protocol)
   - [Bugs](#bugs)
   - [License](#license)
+  - [Trusted source](#trusted-source)
 
 <!--TOC-->
 
@@ -49,17 +50,17 @@ It can handle:
 
 - Virtual hard disk creation, backup and deletion.
 - Basic network management: three ports are exposed to the host
-  machine (but you can add as many as you want). One of these two ports is 
+  machine (but you can add as many as you want). One of these two ports is
   SSH.
 - Shared directory between host and guest.
 - Running the virtual machine with a combination of the previous options.
 
 ## Prerequisites
 
-- You need a 64 bit machine with virtualization technology and at least 4 GB 
+- You need a 64 bit machine with virtualization technology and at least 4 GB
   of RAM.
 - Modify `configvmrc` based on your needs.
-  Variables are self-explanatory and I have kept mine 
+  Variables are self-explanatory and I have kept mine
   as an example.
 
 ## Dependencies
@@ -116,7 +117,7 @@ Written in 2018 by Franco Masotti/frnmst <franco.masotti@live.com>
 
 ### Actions and parameters
 
-You can make some combinations between actions and places. Both of these 
+You can make some combinations between actions and places. Both of these
 elements are parameters.
 
 #### Actions
@@ -138,7 +139,7 @@ elements are parameters.
 
 ### Setup
 
-1. Create a new virtual hard disk and complete the OS installation which 
+1. Create a new virtual hard disk and complete the OS installation which
    can also be done via SSH.
 
          $ ./qvm --create && ./qvm --install
@@ -148,16 +149,16 @@ elements are parameters.
 
          $ ./qvm --backup
 
-4. Now you can run the virtual machine either using the original or the backup 
-   virtual hard disk. If you run `./qvm --run` the virtual machine will run in 
+4. Now you can run the virtual machine either using the original or the backup
+   virtual hard disk. If you run `./qvm --run` the virtual machine will run in
    graphics mode using the backup hard disk.
-5. Optionally add the following in the guest machine fstab file (`/etc/fstab`), 
-   to enable the shared directory automatically. This avoids entering mount 
+5. Optionally add the following in the guest machine fstab file (`/etc/fstab`),
+   to enable the shared directory automatically. This avoids entering mount
    commands by hand.
 
          host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
 
-    Note: to be able to access the shared directory the user and group ids must 
+    Note: to be able to access the shared directory the user and group ids must
     be the same for the host and guest machines. If needed, change those ids within
     the guest machine:
 
@@ -180,8 +181,8 @@ elements are parameters.
 
 ## VNC options
 
-The VNC options in this script allow you to connect to a remote instance of 
-QEMU. This is particularly useful if, for example, your local machine 
+The VNC options in this script allow you to connect to a remote instance of
+QEMU. This is particularly useful if, for example, your local machine
 does not support virtualization.
 
 *Note: the VNC traffic goes through SSH TCP forwarding, so it is encrypted.*
@@ -197,7 +198,7 @@ configuration of the host computer:
 ### Examples
 
 You must run QVM with one of the VNC options on the server side.
-On the client side you must simply edit the `HOST_IP_ADDRESS` and 
+On the client side you must simply edit the `HOST_IP_ADDRESS` and
 `HOST_USERNAME` variables in the configuration file.
 
 #### Installation
@@ -224,25 +225,25 @@ on the client.
 #### Maintenance
 
 You can use the installation method for maintenance as well, for example if the
-machine is unbootable. Select the appropriate virtual hard disk for the 
+machine is unbootable. Select the appropriate virtual hard disk for the
 `VHD_NAME` variable in the configuration file and continue with
 the installation instructions. You should find the hard disk (usually `/dev/sda`).
 
 ## Automatic remote startup
 
 To automatically start the virtual machine from a non-host computer you can
-use the `--remote` option. Make sure that both the local 
-(non-host) and the remote host computer have a copy of the QVM repository with 
+use the `--remote` option. Make sure that both the local
+(non-host) and the remote host computer have a copy of the QVM repository with
 the variables correctly set in the `configrc` file.
 
 This script will start the virtual machine if on the host computer no other
-virtual machine is running. You can use either a VNC or headless 
-connection. Both of them require that SSH is configured correctly on the  
+virtual machine is running. You can use either a VNC or headless
+connection. Both of them require that SSH is configured correctly on the
 computers, i.e. the host must be reachable from the client via SSH.
 This can be verified by using the `--attach --remote` options while the
 virtual machine is already running.
 
-Once you have checked that everyting works, you can add a command alias in 
+Once you have checked that everyting works, you can add a command alias in
 your shell configuration file (e.g: `~/.bashrc`), something like:
 
     alias vm='/home/user/scripts/qvm/qvm --run --remote --vnc'
@@ -255,30 +256,36 @@ because `--remote` implies `--nox` by default. If you don't need VNC:
 
 ### Virtual machine hard disk over a network protocol
 
-If you happen to use a form of network filesystem, such as 
+If you happen to use a form of network filesystem, such as
 [GlusterFS](http://docs.gluster.org/en/latest/),
 you can keep the machine hard disk off the host and put it on another computer.
-There might be a some form of lag depending on the hardware, protocol and 
+There might be a some form of lag depending on the hardware, protocol and
 network connections.
 
 An example with GlusterFS might be:
 
     VHD_NAME="gluster+tcp://server-address/gluster-volume/"${IMG_NAME}"."${VHD_TYPE}""
 
-This will work provided that you install the QEMU GlusterFS block module 
+This will work provided that you install the QEMU GlusterFS block module
 package (if it's not already present in the QEMU package itself).
 
-You should consult the QEMU's manual to learn about all possible compatible 
+You should consult the QEMU's manual to learn about all possible compatible
 network filesystems.
 
 ## Bugs
 
-- If you want to use `--remote` and `--vnc` combined, you must first 
-  disable any `ControlMaster` and `ControlPath` options associated to the user 
+- If you want to use `--remote` and `--vnc` combined, you must first
+  disable any `ControlMaster` and `ControlPath` options associated to the user
   and host in control of the virtual machine.
-  These options can be found in the client's SSH configuration file which is 
+  These options can be found in the client's SSH configuration file which is
   usually `~/.ssh/config`.
 
 ## License
 
 Creative Commons Zero (CC0).
+
+## Trusted source
+
+You can check the authenticity of new releases using my public key.
+
+Instructions, sources and keys can be found at [frnmst.gitlab.io/software](https://frnmst.gitlab.io/software/)
