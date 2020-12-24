@@ -156,8 +156,9 @@ elements are parameters.
    to enable the shared directory automatically. This avoids entering mount
    commands by hand.
 
-         host_share  /home/vm/shared  9p  noauto,x-systemd.automount,trans=virtio,version=9p2000.L  0  0
+         host_share  /home/vm/shared  9p  auto,access=any,x-systemd.automount,msize=268435456,trans=virtio,version=9p2000.L  0  0
 
+    See also the [official documentation](https://wiki.qemu.org/Documentation/9psetup)
     Note: to be able to access the shared directory the user and group ids must
     be the same for the host and guest machines. If needed, change those ids within
     the guest machine:
