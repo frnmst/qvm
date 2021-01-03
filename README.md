@@ -15,6 +15,7 @@ Trivial management of 64 bit virtual machines with qemu.
   - [Dependencies](#dependencies)
   - [Installation](#installation)
     - [Arch Linux based distros](#arch-linux-based-distros)
+    - [Debian based distros](#debian-based-distros)
   - [Help](#help)
   - [Setup information and usage](#setup-information-and-usage)
     - [Actions and parameters](#actions-and-parameters)
@@ -70,7 +71,7 @@ You need to install the following packages and the ones listed for
 
 | Package | Executable | Version command | Package version |
 |---------|------------|-----------------|-----------------|
-| [GNU Bash](https://www.gnu.org/software/bash/bash.html) | `/bin/bash` | `$ bash --version` | `GNU bash, version 5.0.16(1)-release` |
+| [GNU Bash](https://www.gnu.org/software/bash/bash.html) | `/bin/bash` | `$ bash --version` | `GNU bash, version 5.0.3(1)-release` |
 | [QEMU](https://www.qemu.org/) | `/bin/qemu-system-x86_64` | `$ qemu-system-x86_64 --version` | `QEMU emulator version 3.1.0` |
 | [TigerVNC](http://www.tigervnc.org) | `/bin/vncviewer` | `$ vncviewer --help` | `TigerVNC Viewer 64-bit v1.9.0` |
 | [OpenSSH](https://www.openssh.com/portable.html) | `/bin/ssh` | `$ ssh -V` | `OpenSSH_7.9p1, OpenSSL 1.1.1a  20 Nov 2018`
@@ -81,6 +82,10 @@ You need to install the following packages and the ones listed for
 ### Arch Linux based distros
 
     # pacman -S coreutils openssh tigervnc qemu
+
+### Debian based distros
+
+    # apt-get install coreutils ssh tigervnc-viewer tigervnc-common qemu qemu-kvm qemu-system-x86
 
 ## Help
 
