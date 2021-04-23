@@ -2,6 +2,13 @@
 
 Trivial management of 64 bit virtual machines with qemu.
 
+**Warning: THIS REPOSITORY IS DEPRECATED. HAVE A LOOK HERE:**
+
+- https://software.franco.net.eu.org/frnmst/automated-tasks
+- https://codeberg.org/frnmst/automated-tasks
+- https://github.com/frnmst/automated-tasks
+- https://docs.franco.net.eu.org/automated-tasks/scripts.html#qvm-py
+
 ## Table of contents
 
 <!--TOC-->
