@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 
 [dev-packages]
-pre-commit = '~=2.9'
+pre-commit = '~=2.12'
 
 [requires]
-python_version = "3.9"
+python_version = "*"
