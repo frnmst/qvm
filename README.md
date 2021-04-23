@@ -46,7 +46,7 @@ Trivial management of 64 bit virtual machines with qemu.
 
 ## Reasons
 
-See https://frnmst.gitlab.io/notes/qemu-ssh-tunnel.html
+See https://blog.franco.net.eu.org/notes/qemu-ssh-tunnel.html
 
 ## Version
 
